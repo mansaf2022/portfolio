@@ -1,0 +1,719 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mansaf Maheen: Robotics, Vision and Embedded ML Portfolio</title>
+<meta name="description" content="Six hardware projects in industrial robotics, machine vision and embedded machine learning, each tested on real rigs with the measurements reported as they came out.">
+<!-- Link previews on LinkedIn, WhatsApp and email. Add og:image once you have a project photo (1200x630 works best). -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Mansaf Maheen: Robotics, Vision and Embedded ML Portfolio">
+<meta property="og:description" content="Six hardware projects in industrial robotics, machine vision and embedded machine learning, tested on real rigs.">
+<meta name="theme-color" content="#f3f5f7">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2316202b'/%3E%3Cpath d='M5 18 Q9 6 13 18 T21 18 L27 18' fill='none' stroke='%23f3f5f7' stroke-width='2.6' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/css/all.min.css" integrity="sha384-nRgPTkuX86pH8yjPJUAFuASXQSSl2/bBUiNV47vSYpKFxHJhbcrGnmlYpYJMeD7a" crossorigin="anonymous" referrerpolicy="no-referrer">
+<link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=Literata:opsz,wght@7..72,400;7..72,600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f3f5f7;
+    --ink: #16202b;
+    --graphite: #55616d;
+    --rule: #cdd5dc;
+    --cobalt: #2340c8;
+    --cobalt-tint: #e4eafb;
+    --teal: #17695a;
+    --teal-tint: #dcefea;
+    --display: "Familjen Grotesk", "Helvetica Neue", Arial, sans-serif;
+    --text: "Literata", Georgia, "Times New Roman", serif;
+    color-scheme: light;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--text);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    -webkit-text-size-adjust: 100%;
+  }
+  a { color: var(--cobalt); text-underline-offset: 0.2em; }
+  a:hover { text-decoration-thickness: 2px; }
+  :focus-visible { outline: 3px solid var(--cobalt); outline-offset: 3px; }
+  .skip { position: absolute; left: -999px; top: 0; background: var(--ink); color: #fff; padding: 0.6rem 1rem; z-index: 10; }
+  .skip:focus { left: 0; }
+
+  .wrap { width: min(100% - 2rem, 72rem); margin-inline: auto; }
+
+  /* Header */
+  .site-head { border-bottom: 1px solid var(--rule); }
+  .site-head .wrap { display: flex; flex-wrap: wrap; gap: 0.5rem 2rem; align-items: baseline; justify-content: space-between; padding-block: 1rem; }
+  .brand { font-family: var(--display); color: var(--ink); text-decoration: none; display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 0.75rem; }
+  .brand b { font-weight: 700; font-size: 1.25rem; }
+  .brand span { color: var(--graphite); font-weight: 500; }
+  .site-head nav { display: flex; flex-wrap: wrap; gap: 0.25rem 1.5rem; font-family: var(--display); font-weight: 500; }
+  .site-head nav a { color: var(--graphite); text-decoration: none; white-space: nowrap; padding-block: 0.35rem; }
+  .site-head nav a:hover { color: var(--cobalt); text-decoration: underline; }
+
+  /* Hero */
+  .hero { padding-block: clamp(2.5rem, 7vw, 5.5rem) clamp(2rem, 5vw, 3.5rem); }
+  .hero h1 {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(2.1rem, 5.6vw, 4rem);
+    line-height: 1.06;
+    letter-spacing: -0.025em;
+    margin: 0 0 1.25rem;
+    max-width: 22ch;
+    text-wrap: balance;
+  }
+  .hero .lede { max-width: 58ch; font-size: 1.175rem; color: var(--graphite); margin: 0; }
+  .hero .creds { max-width: 58ch; margin: 0.9rem 0 0; font-size: 1rem; }
+  .actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.75rem; font-family: var(--display); font-weight: 600; }
+  .btn { display: inline-block; font: inherit; font-family: var(--display); font-weight: 600; cursor: pointer; background: transparent; padding: 0.7rem 1.15rem; border-radius: 6px; text-decoration: none; border: 2px solid var(--ink); color: var(--ink); }
+  .btn.primary { background: var(--ink); color: var(--paper); }
+  .btn:hover { background: var(--cobalt); border-color: var(--cobalt); color: #fff; text-decoration: none; }
+  .trace { margin: clamp(2rem, 5vw, 3.25rem) 0 0; }
+  .trace svg { display: block; width: 100%; height: auto; max-height: 15rem; }
+  .trace figcaption { margin-top: 0.75rem; max-width: 70ch; font-size: 0.9375rem; color: var(--graphite); line-height: 1.55; }
+  .trace .axis { stroke: var(--rule); stroke-width: 1; }
+  .trace .zero { stroke: var(--graphite); stroke-width: 1; stroke-dasharray: 3 5; }
+  .trace .tick { fill: var(--graphite); font-family: var(--display); font-size: 12px; }
+  .trace .tag { fill: var(--ink); font-family: var(--display); font-weight: 600; font-size: 13px; }
+  .trace .line { fill: none; stroke: var(--cobalt); stroke-width: 2.5; stroke-linejoin: round; stroke-linecap: round; }
+  .trace .line.after { stroke: var(--teal); }
+  .trace .divider { stroke: var(--ink); stroke-width: 1; }
+  @media (max-width: 40rem) {
+    /* The chart scales down to phone width, so its labels need larger units to stay readable */
+    .trace .tick { font-size: 26px; }
+    .trace .tag { font-size: 26px; }
+    .trace .line { stroke-width: 4; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .trace .line { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animation: draw 2.4s 0.3s ease-out forwards; }
+    .trace .line.after { animation-delay: 1.6s; animation-duration: 1.4s; }
+    @keyframes draw { to { stroke-dashoffset: 0; } }
+  }
+
+  /* About */
+  .about { border-top: 1px solid var(--rule); padding-block: clamp(2rem, 5vw, 3.5rem); }
+  .about .grid { display: grid; gap: 1rem 3rem; }
+  .about h2, .group-head h2, .contact h2 { font-family: var(--display); font-weight: 600; font-size: 1.5rem; letter-spacing: -0.01em; margin: 0; }
+  .about p { margin: 0; max-width: 62ch; }
+  .about p + p { margin-top: 1rem; }
+  @media (min-width: 56rem) { .about .grid { grid-template-columns: 1fr 2fr; } }
+
+  /* Groups */
+  .group { padding-block: clamp(2.5rem, 6vw, 4.5rem) 1rem; border-top: 1px solid var(--rule); }
+  .group.industrial { --accent: var(--cobalt); --tint: var(--cobalt-tint); }
+  .group.ml { --accent: var(--teal); --tint: var(--teal-tint); }
+  .group-head { margin-bottom: 1.5rem; }
+  .group-head h2 { font-size: clamp(1.6rem, 3.4vw, 2.2rem); color: var(--accent); }
+  .group-head p { margin: 0.5rem 0 0; color: var(--graphite); max-width: 60ch; }
+
+  .project { display: grid; gap: 1.25rem 3rem; padding-block: 2.25rem; border-top: 1px solid var(--rule); }
+  .project:first-of-type { border-top: 0; }
+  .project h3 { font-family: var(--display); font-weight: 600; font-size: clamp(1.4rem, 2.6vw, 1.75rem); line-height: 1.15; letter-spacing: -0.015em; margin: 0 0 0.4rem; }
+  .context { margin: 0 0 0.75rem; font-family: var(--display); font-weight: 500; color: var(--accent); }
+  .pitch { margin: 0; color: var(--graphite); max-width: 46ch; }
+  .tags { list-style: none; margin: 1rem 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.4rem; max-width: 46ch; }
+  .tags li { font-family: var(--display); font-size: 0.875rem; font-weight: 500; padding: 0.15rem 0.55rem; border: 1px solid var(--rule); border-radius: 4px; background: #fff; color: var(--ink); }
+  .results { margin: 0 0 1.25rem; padding: 0; list-style: none; max-width: 66ch; }
+  .results li { padding: 0.15rem 0 0.15rem 1rem; border-left: 3px solid var(--accent); margin-bottom: 0.75rem; }
+  .results li:last-child { margin-bottom: 0; }
+  @media (min-width: 56rem) {
+    .project { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: start; }
+    /* Keeps the project name in view while a long detail panel is open */
+    .project > :first-child { position: sticky; top: 1.5rem; }
+  }
+
+  details { max-width: 66ch; }
+  summary {
+    cursor: pointer;
+    font-family: var(--display);
+    font-weight: 600;
+    color: var(--accent);
+    padding: 0.55rem 0.9rem;
+    background: var(--tint);
+    border-radius: 6px;
+    width: fit-content;
+    list-style: none;
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary::before { content: "+"; display: inline-block; width: 1.1em; font-weight: 700; }
+  details[open] summary::before { content: "\2212"; }
+  .detail-body { padding-top: 1.25rem; }
+  .detail-body h4 { font-family: var(--display); font-weight: 600; font-size: 1.0625rem; margin: 1.5rem 0 0.4rem; }
+  .detail-body h4:first-child { margin-top: 0; }
+  .detail-body p { margin: 0 0 0.5rem; }
+  .detail-body ul { margin: 0; padding-left: 1.2rem; }
+  .detail-body li { margin-bottom: 0.4rem; }
+  .tools { color: var(--graphite); font-size: 0.9875rem; }
+  .tools li { margin-bottom: 0.25rem; }
+
+  /* Contact */
+  .contact { border-top: 1px solid var(--rule); padding-block: clamp(2.5rem, 6vw, 4rem); margin-top: 2rem; }
+  .contact p { max-width: 56ch; margin: 0.6rem 0 1rem; }
+  .social { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 1rem; }
+  .social a { display: grid; place-items: center; width: 3.25rem; height: 3.25rem; border-radius: 8px; background: #fff; border: 1px solid var(--rule); font-size: 1.6rem; text-decoration: none; transition: transform 0.15s ease, border-color 0.15s ease; }
+  .social a:hover { border-color: currentColor; transform: translateY(-2px); }
+  .social .email { color: #ea4335; }
+  .gmail-mark { display: block; width: 1.6rem; height: 1.6rem; background: currentColor; -webkit-mask: url("https://cdn.jsdelivr.net/npm/simple-icons@16.33.0/icons/gmail.svg") center / contain no-repeat; mask: url("https://cdn.jsdelivr.net/npm/simple-icons@16.33.0/icons/gmail.svg") center / contain no-repeat; }
+  .social .linkedin { color: #0a66c2; }
+  .social .github { color: #181717; }
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+  @media (prefers-reduced-motion: reduce) { .social a { transition: none; } .social a:hover { transform: none; } }
+  footer { border-top: 1px solid var(--rule); padding-block: 1.25rem; color: var(--graphite); font-size: 0.9375rem; }
+
+  /* CV request dialog */
+  .cv-dialog { width: min(100% - 2rem, 34rem); max-height: calc(100vh - 2rem); padding: 0; border: 0; border-radius: 10px; background: var(--paper); color: var(--ink); box-shadow: 0 20px 60px rgba(22, 32, 43, 0.35); }
+  .cv-dialog::backdrop { background: rgba(22, 32, 43, 0.55); }
+  .cv-inner { padding: 1.75rem 1.5rem 1.5rem; position: relative; }
+  .cv-dialog h2 { font-family: var(--display); font-weight: 600; font-size: 1.5rem; margin: 0 2.5rem 0.4rem 0; }
+  .cv-intro { margin: 0 0 1.25rem; color: var(--graphite); }
+  .close-x { position: absolute; top: 0.9rem; right: 0.9rem; width: 2.5rem; height: 2.5rem; border: 0; border-radius: 6px; background: transparent; color: var(--ink); font-size: 1.6rem; line-height: 1; cursor: pointer; }
+  .close-x:hover { background: var(--rule); }
+  .field { margin-bottom: 1rem; }
+  .field label { display: block; font-family: var(--display); font-weight: 600; margin-bottom: 0.3rem; }
+  .field label .opt { font-weight: 400; color: var(--graphite); }
+  .field input, .field select, .field textarea { width: 100%; font: inherit; font-size: 1rem; color: var(--ink); background: #fff; border: 1px solid #aeb8c2; border-radius: 6px; padding: 0.65rem 0.75rem; }
+  .field textarea { min-height: 6rem; resize: vertical; }
+  .field input:focus-visible, .field select:focus-visible, .field textarea:focus-visible { outline: 3px solid var(--cobalt); outline-offset: 1px; border-color: var(--cobalt); }
+  .hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+  .privacy { font-size: 0.9375rem; color: var(--graphite); margin: 0.25rem 0 1.25rem; }
+  .cv-dialog .btn.primary { width: 100%; }
+  .cv-dialog .btn[disabled] { opacity: 0.6; cursor: progress; }
+  .form-status { margin: 0.9rem 0 0; font-family: var(--display); }
+  .form-status.error { color: #b3261e; }
+  .cv-done { text-align: left; }
+  .cv-done p { margin: 0 0 1.25rem; }
+  .contact .btn { margin-top: 1.5rem; }
+
+  /* Printing or saving as PDF: show every detail panel and drop the interactive parts */
+  @media print {
+    body { background: #fff; font-size: 10.5pt; }
+    .site-head nav, .skip, .actions, summary, .trace, .cv-dialog, .contact .btn { display: none; }
+    .hero { padding-block: 0 1rem; }
+    .project { break-inside: avoid-page; padding-block: 1rem; }
+    .project > :first-child { position: static; }
+    a { color: inherit; }
+  }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand" href="#top"><b>Mansaf Maheen</b><span>Robotics, vision and embedded ML</span></a>
+    <nav aria-label="Sections">
+      <a href="#industrial">Industrial automation</a>
+      <a href="#embedded-ml">Embedded ML</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero" id="top">
+    <div class="wrap">
+      <h1>I build sensing and control systems on real hardware, then test them until the numbers hold.</h1>
+      <p class="lede">Six projects across industrial robotics, machine vision and embedded machine learning. Each one was tested on a physical rig, and the write-ups say what the measurements did and did not support.</p>
+      <p class="creds">MSc, Newcastle University. Industrial vision experience at Visicon Ltd, UK, and industrial robotics experience at M5Tec.</p>
+      <div class="actions">
+        <a class="btn primary" href="#industrial">See the projects</a>
+        <button type="button" class="btn" data-open-cv>Request my CV</button>
+        <a class="btn" href="#contact">Contact me</a>
+      </div>
+
+      <figure class="trace">
+        <svg viewBox="0 -8 720 178" role="img" aria-labelledby="trace-title trace-desc">
+          <title id="trace-title">Robot dog balance command before and after the fix</title>
+          <desc id="trace-desc">A schematic line that swings widely up and down, then goes flat after the controller is replaced.</desc>
+          <line class="axis" x1="70" y1="25" x2="70" y2="150"/>
+          <line class="zero" x1="70" y1="85" x2="700" y2="85"/>
+          <text class="tick" x="62" y="36" text-anchor="end">+55°</text>
+          <text class="tick" x="62" y="92" text-anchor="end">0°</text>
+          <text class="tick" x="62" y="146" text-anchor="end">-55°</text>
+          <line class="divider" x1="385" y1="10" x2="385" y2="158"/>
+          <text class="tag" x="80" y="12">Stock balance mode</text>
+          <text class="tag" x="397" y="12">Replacement controller</text>
+          <path id="before" class="line" d=""/>
+          <path id="after" class="line after" d=""/>
+        </svg>
+        <figcaption>Schematic of the robot dog's leg command in balance mode. The stock filter swung the legs about 55° either way roughly 4.5 times a second. After I replaced the filter and controller, the measured wobble was 0.00 to 0.01°. <a href="#robot-dog">See the robot dog project.</a></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="about" aria-labelledby="about-h">
+    <div class="wrap grid">
+      <h2 id="about-h">About my work</h2>
+      <div>
+        <p>I build and test sensing, control, vision and machine-learning systems on real hardware. My industrial work includes a Cognex vision system designed at Visicon Ltd to check bag orientation and print side, a KUKA cell that uses force feedback to thread bolts for fusion-energy maintenance, and a camera-guided arm that sorts and swaps batteries for electric two-wheelers.</p>
+        <p>My embedded ML work on Raspberry Pi includes a self-balancing, fall-safe robot dog, a model-railway rig that detects track faults from vibration, and a model V8 that detects a missing gear tooth. In each project I designed the tests, validated on physical rigs, and reported what the measurements did and didn't support.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="group industrial" id="industrial" aria-labelledby="industrial-h">
+    <div class="wrap">
+      <div class="group-head">
+        <h2 id="industrial-h">Industrial automation</h2>
+        <p>Robot cells and vision systems built for client and factory settings.</p>
+      </div>
+
+      <article class="project" id="kuka">
+        <div>
+          <h3>Force/Torque-Guided Robotic Bolting System</h3>
+          <p class="context">Client project for UKAEA</p>
+          <p class="pitch">A KUKA robot cell that finds, picks and threads bolts using force feedback, built to show automated fastening is feasible for remote fusion-energy maintenance.</p>
+          <ul class="tags" aria-label="Key tools"><li>KUKA KRL</li><li>Force/torque control</li><li>EtherCAT</li><li>KUKA Sim</li><li>TwinCAT</li></ul>
+        </div>
+        <div>
+          <ul class="results">
+            <li>Demonstrated force/torque-based insertion and threading of A4 stainless steel bolts, in both vertical and horizontal orientations.</li>
+            <li>Fixed early EtherCAT communication problems with a new network topology that used an Omron hub.</li>
+            <li>Delivered two client reports to UKAEA: the detailed design (D4) and commissioning and test (D5).</li>
+          </ul>
+          <details>
+            <summary>Role, tools and skills</summary>
+            <div class="detail-body">
+              <h4>Summary</h4>
+              <p>UKAEA needed evidence that bolting could be automated for remote maintenance in a fusion environment, where manual work is hard. I designed and commissioned a robot cell. A KUKA KR 60-3 carries an EtherCAT gripper and a force/torque sensor. Force-triggered routines find holes, pick up bolts and thread them.</p>
+              <h4>My role</h4>
+              <ul>
+                <li>Engineered and integrated the robot, KRC4 controller, EtherCAT gripper and force/torque sensor.</li>
+                <li>Wrote the KRL programs for hole search, bolt pickup and threading.</li>
+                <li>Simulated the cell in KUKA Sim before deployment, covering reachability, path planning and collision checks.</li>
+                <li>Led integration and testing.</li>
+                <li>Wrote the Detailed Design Report (D4) and contributed to the Commissioning and Test Report (D5).</li>
+              </ul>
+              <h4>Tools and technologies</h4>
+              <p class="tools">KUKA KR 60-3, KRC4 controller, KUKA KRL / KSS 8.3, WorkVisual, KUKA Sim, Schunk EGU 50-EC-M-B EtherCAT gripper, Schunk FTE-AXIA130 force/torque sensor, EtherCAT (Omron junction hub), TwinCAT, RSI</p>
+              <h4>Skills demonstrated</h4>
+              <ul>
+                <li>Robot programming and force-feedback control</li>
+                <li>Industrial system integration (EtherCAT, sensors, grippers)</li>
+                <li>Simulation and commissioning</li>
+                <li>Technical documentation for a client</li>
+                <li>Troubleshooting hardware and communication faults</li>
+              </ul>
+            </div>
+          </details>
+        </div>
+      </article>
+
+      <article class="project" id="pet-bags">
+        <div>
+          <h3>PET Bag Orientation and Print Inspection System</h3>
+          <p class="context">Visicon Ltd, UK</p>
+          <p class="pitch">A multi-camera Cognex vision system I designed at Visicon Ltd that checks orientation, print side and position of PET dog-food bags using 3D, 2D and deep learning.</p>
+          <ul class="tags" aria-label="Key tools"><li>Cognex VisionPro</li><li>3D inspection</li><li>Deep learning</li><li>C#</li><li>HMI</li></ul>
+        </div>
+        <div>
+          <ul class="results">
+            <li>Demonstrated to the client; the system was later deployed at the factory.</li>
+            <li>All four bags in an image are checked in one run, giving a single True/False orientation result and a single OK/NOT OK print result.</li>
+            <li>Deep learning extracts each bag's coordinates and height.</li>
+          </ul>
+          <details>
+            <summary>Role, tools and skills</summary>
+            <div class="detail-body">
+              <h4>Summary</h4>
+              <p>At Visicon Ltd (UK), I designed a vision system to automatically verify the placement of PET plastic bags of dog food: correct orientation, correct print side and bag position. I built a Cognex Designer application pairing a 3D camera, which measures each bag's height profile, with a 10 MP GigE camera and a trained classifier that reads the print. A deep-learning model locates each bag.</p>
+              <h4>My role</h4>
+              <ul>
+                <li>Designed the multi-camera inspection pipeline in Cognex Designer.</li>
+                <li>Configured the 3D cross-section tools and angle limits for each bag.</li>
+                <li>Trained the classifier to separate OK and NOT OK print orientation.</li>
+                <li>Trained a deep-learning model to locate the bags and integrated it into Designer.</li>
+                <li>Wrote the scripts that turn the per-bag results into pass/fail outputs.</li>
+                <li>Built the HMI.</li>
+              </ul>
+              <h4>Tools and technologies</h4>
+              <ul class="tools">
+                <li>Hardware: Cognex A5120 3D camera, 10 MP GigE camera</li>
+                <li>Software: Cognex Designer, VisionPro, Cog3DRangeImageCrossSectionTool, CogClassifyTool, C# scripting</li>
+                <li>Deep learning: VisionPro Deep Learning 3.3.2 (Cognex Deep Learning Studio, ViDi Blue Locate)</li>
+              </ul>
+              <h4>Skills demonstrated</h4>
+              <ul>
+                <li>Machine-vision system design</li>
+                <li>3D / point-cloud inspection</li>
+                <li>Deep-learning and classifier training</li>
+                <li>Scripting pass/fail logic and HMI development</li>
+                <li>Client demonstration</li>
+              </ul>
+            </div>
+          </details>
+        </div>
+      </article>
+
+      <article class="project" id="battery-swap">
+        <div>
+          <h3>Vision-Guided Robotic Arm for Battery Swapping</h3>
+          <p class="context">MSc dissertation, Newcastle University</p>
+          <p class="pitch">A prototype camera-guided robotic arm that detects scale-model batteries, reads their LED charge state and sorts them, aimed at giving electric two-wheeler riders only fully charged units.</p>
+          <ul class="tags" aria-label="Key tools"><li>Python</li><li>OpenCV</li><li>MyCobot 280</li><li>Creo</li><li>3D printing</li></ul>
+        </div>
+        <div>
+          <ul class="results">
+            <li>The camera detected each battery's position and charge colour (red, yellow or green) automatically. The arm used those coordinates to pick the battery and place it in the matching shelf position.</li>
+            <li>The prototype completed a full swap: a low-charge battery to the shelf, and a fully charged battery back to the work area.</li>
+          </ul>
+          <details>
+            <summary>Role, tools and skills</summary>
+            <div class="detail-body">
+              <h4>Summary</h4>
+              <p>Charging stations for electric two-wheelers rely on manual battery handling, which is slow and error-prone. For my MSc dissertation at Newcastle University, I built a prototype in which a camera detects each battery and reads its LED charge indicator. The coordinates go to a six-degree-of-freedom robotic arm, which picks the battery and places it on a colour-coded shelf. The arm then swaps a depleted battery for a fully charged one.</p>
+              <h4>My role</h4>
+              <ul>
+                <li>Completed the project on my own as a solo MSc dissertation.</li>
+                <li>Designed the workspace in Creo: a 2×3 shelf, a battery base and cube cases. I then laser-cut the shelf and 3D-printed the 26 mm cube "batteries".</li>
+                <li>Wrote the Python code that links camera detection to the arm's pick-and-place moves.</li>
+                <li>Calibrated the camera-to-robot coordinate mapping so the arm could locate batteries from the camera image.</li>
+                <li>Tested detection, pick-and-place accuracy and full swap cycles, and wrote up the work as my dissertation.</li>
+              </ul>
+              <h4>Tools and technologies</h4>
+              <p class="tools">Python, OpenCV (HSV colour segmentation, contour detection), Raspberry Pi, Elephant Robotics MyCobot 280 Pi (6-DOF arm), 720p USB camera, Creo (CAD), 3D printing, laser cutting</p>
+              <h4>Skills demonstrated</h4>
+              <ul>
+                <li>Computer vision (OpenCV colour segmentation and object localisation)</li>
+                <li>Robotics integration (camera-to-robot calibration, pick-and-place programming)</li>
+                <li>Python programming for hardware control</li>
+                <li>CAD and rapid prototyping (Creo, 3D printing, laser cutting)</li>
+                <li>Experimental testing and technical writing</li>
+              </ul>
+            </div>
+          </details>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="group ml" id="embedded-ml" aria-labelledby="ml-h">
+    <div class="wrap">
+      <div class="group-head">
+        <h2 id="ml-h">Embedded ML</h2>
+        <p>Small models and control loops running on Raspberry Pi hardware, measured against the physical rig.</p>
+      </div>
+
+      <article class="project" id="robot-dog">
+        <div>
+          <h3>Self-Balancing, Fall-Safe Raspberry Pi Robot Dog</h3>
+          <p class="context">Freenove kit rebuilt</p>
+          <p class="pitch">Over seven months I turned a kit robot dog into a sensing, self-protecting robot with on-device ML, smooth motion, self-balancing and fall safety.</p>
+          <ul class="tags" aria-label="Key tools"><li>Python</li><li>Edge Impulse</li><li>IMU sensor fusion</li><li>Control systems</li><li>Raspberry Pi</li></ul>
+        </div>
+        <div>
+          <ul class="results">
+            <li>Self-balancing fixed: leg commands that swung ±55° about 4.5 times a second now hold steady (0.00 to 0.01° wobble), and simulated 6° tilts are corrected in about 1 second.</li>
+            <li>Pickup detection scored 91% on 580 one-second windows (99% idle, 83% pickup), measured on recorded sessions that likely overlap the training data.</li>
+            <li>Fall detection passed 13 of 13 hardware checks, and stand/sit became symmetric at 5.01 s / 5.00 s, with about 60% finer joint motion.</li>
+          </ul>
+          <details>
+            <summary>Role, phases, tools and skills</summary>
+            <div class="detail-body">
+              <h4>Summary</h4>
+              <p>The stock Freenove robot dog jerked on power-up, shook instead of levelling in balance mode, and had no awareness of being handled or falling. Across four phases I trained an on-device pickup classifier, built smooth S-curve servo motion, prototyped multi-sensor obstacle detection, and replaced the balance controller while adding fall, drop and low-battery protection. Every change was tested on the real robot, and I corrected claims the measurements didn't support.</p>
+              <h4>My role</h4>
+              <ul>
+                <li>Designed the motion-data collection process, recorded 95 labelled sessions and trained four Edge Impulse model versions.</li>
+                <li>Implemented S-curve servo motion and found a rounding bug that limited every joint to whole-degree steps.</li>
+                <li>Designed a five-component system that combines camera, ultrasonic and motion-sensor data with two on-device models.</li>
+                <li>Diagnosed why the stock balance mode oscillated, then designed a replacement filter and controller and integrated it into the robot's app control path.</li>
+                <li>Set fall and battery safety thresholds from measured sensor data instead of guesses.</li>
+                <li>Built hardware tests with simulated sensor faults, checking servo shutdown by reading the driver's registers back.</li>
+              </ul>
+              <h4>Project phases</h4>
+              <ul>
+                <li>Touch and pickup recognition: 95 ten-second sessions at 50 Hz, about 16 minutes of motion data. The final Idle/Pickup model reached 91% window accuracy and uses a three-window vote before the robot nods and lights up. Re-testing every version showed the three-class models labelled nearly everything as Patting, which supports the two-class design.</li>
+                <li>Smooth servo motion: stand/sit made symmetric at 5.01 s / 5.00 s, repeatable within ±0.004 s, and 39 to 62 distinct servo positions. Body wobble fell from 4.45 to 2.65 deg/s between 3 s and 9 s transitions.</li>
+                <li>Multi-sensor obstacle detection: detected a real obstacle at 21 cm, de-escalated when the path cleared, and ran object detection (6 classes) and motion classification (Idle/Pickup) at the same time on the Pi.</li>
+                <li>Self-balancing, fall safety and behaviours: the fall trigger sits 27° above the most extreme normal pose across 8 tricks, and drops are detected within 100 ms. Measured battery sag of 0.39 to 0.47 V per trick led to a 15-second smoothing window that prevents false low-battery alarms.</li>
+              </ul>
+              <h4>Tools and technologies</h4>
+              <ul class="tools">
+                <li>Hardware: Raspberry Pi, MPU6050 IMU, PCA9685 servo driver, ADS7830 ADC, ultrasonic sensor, camera, RGB LEDs</li>
+                <li>Software: Python, NumPy, Flask, gpiozero, smbus, picamera2, multithreading, Git</li>
+                <li>ML: Edge Impulse (edge_impulse_linux SDK)</li>
+              </ul>
+              <h4>Skills demonstrated</h4>
+              <ul>
+                <li>Embedded ML and sensor fusion</li>
+                <li>Control systems and motion design</li>
+                <li>Hardware testing and measurement</li>
+                <li>Root-cause debugging</li>
+                <li>Concurrent real-time Python</li>
+              </ul>
+            </div>
+          </details>
+        </div>
+      </article>
+
+      <article class="project" id="rail-fault">
+        <div>
+          <h3>Rail Fault Detection on a Model Train</h3>
+          <p class="context">Work project, built with Literal Labs ModelMill</p>
+          <p class="pitch">A compact logic-based model on a Raspberry Pi 5 model train detects staged track obstructions from vibration, at a fraction of conventional compute cost.</p>
+          <ul class="tags" aria-label="Key tools"><li>C/C++</li><li>Python</li><li>Logic-based networks</li><li>XGBoost</li><li>Raspberry Pi 5</li></ul>
+        </div>
+        <div>
+          <ul class="results">
+            <li>On twelve recordings made after training, the logic-based model scored 0.691 balanced accuracy, ahead of XGBoost (0.670) and random forest (0.548). It uses 0.10 mJ, 54 KB of flash and 0.080 ms per inference, which is 212× faster and 220× more energy-efficient than the random forest.</li>
+            <li>The dataset was 36 recordings (38 minutes), turned into 2,792 windows of 80 features. Adding the longer 12.8-second timescale lifted accuracy by about 19 points.</li>
+            <li>It found obstructions reliably but missed a gradual ramp fault.</li>
+          </ul>
+          <details>
+            <summary>Role, tools and skills</summary>
+            <div class="detail-body">
+              <h4>Summary</h4>
+              <p>Track inspection relies on dedicated inspection trains, so I tested whether a model small enough for a microcontroller could let ordinary trains report faults. I built a Raspberry Pi 5 model-railway testbed, collected 38 minutes of vibration data across staged faults, and deployed a logic-based network through Literal Labs' ModelMill.</p>
+              <h4>My role</h4>
+              <ul>
+                <li>Built the Raspberry Pi 5 testbed, wired the MPU-6050 motion sensor, and designed the fault-staging and data-collection protocol.</li>
+                <li>Engineered an 80-feature, two-timescale pipeline, trained the model in ModelMill, and compiled the generated SDK on the Pi.</li>
+                <li>Built live inference on top of it and tested it on recordings made after training.</li>
+              </ul>
+              <h4>Tools and technologies</h4>
+              <p class="tools">Raspberry Pi 5, MPU-6050 IMU (I²C), relay-controlled DC motor, Python, C/C++, CMake, gcc, ctypes, Literal Labs ModelMill (logic-based network), scikit-learn, XGBoost</p>
+              <h4>Skills demonstrated</h4>
+              <ul>
+                <li>Embedded sensing and hardware integration</li>
+                <li>Experimental design and data collection, including drift-aware controls</li>
+                <li>Feature engineering for time-series sensor data</li>
+                <li>Honest model evaluation on unseen data, reporting negative results</li>
+                <li>Edge deployment of C/C++ models from Python</li>
+              </ul>
+            </div>
+          </details>
+        </div>
+      </article>
+
+      <article class="project" id="v8-gear">
+        <div>
+          <h3>Gear Fault Detection: Data Collection and LBN Benchmark</h3>
+          <p class="context">Work project, built with Literal Labs ModelMill</p>
+          <p class="pitch">Vibration data from a model V8 rig, on which a 51.9 KiB binary LBN model reached 0.94 accuracy at 0.073 ms per prediction.</p>
+          <ul class="tags" aria-label="Key tools"><li>Data acquisition</li><li>Python</li><li>LBN models</li><li>scikit-learn</li><li>Raspberry Pi 5</li></ul>
+        </div>
+        <div>
+          <ul class="results">
+            <li>LBN scored 0.94 accuracy (the supplier's session-grouped result). The comparison models scored 0.974 (logistic regression, XGBoost), 0.949 (gradient boosting), 0.923 (decision tree, random forest), 0.856 (SVM), 0.831 (MLP) and 0.772 (k-NN).</li>
+            <li>LBN was the fastest of 11 models at 0.073 ms per prediction. That is 237× faster than a random forest (17.299 ms), with 11× less energy (2.65 vs 28.44 mJ) and a 28× smaller artefact (51.9 KiB flash vs 1,440 KiB pickle).</li>
+          </ul>
+          <details>
+            <summary>Role, tools and skills</summary>
+            <div class="detail-body">
+              <h4>Summary</h4>
+              <p>Can a model small enough for a microcontroller detect a damaged gear? I built a Raspberry Pi 5 test rig on a working model V8 engine and recorded 500 Hz vibration data across four gearbox speeds, with tooth faults staged on 3D-printed gears. Literal Labs' binary LBN model reached 0.94 accuracy in 51.9 KiB of flash and was the fastest of 11 models compared.</p>
+              <h4>My role</h4>
+              <ul>
+                <li>Built the 1,169-piece V8 test rig and mounted and wired the accelerometer to the Pi.</li>
+                <li>Diagnosed and fixed a sampling fault (69.3% sample loss, resolved by raising the I2C bus speed).</li>
+                <li>Staged faults on 3D-printed gears and collected the 64-session dataset.</li>
+                <li>Ran a pre-batch check that caught a loose timing chain before any fault recordings were made.</li>
+              </ul>
+              <h4>Tools and technologies</h4>
+              <p class="tools">Raspberry Pi 5, MPU-6500 IMU (I2C), Mould King 10203 V8 kit, 3D printing, Python, Literal Labs ModelMill (LBN models), scikit-learn, XGBoost</p>
+              <h4>Skills demonstrated</h4>
+              <ul>
+                <li>Sensor data acquisition and experimental design</li>
+                <li>Data quality control</li>
+                <li>Model benchmarking and validation</li>
+                <li>Embedded ML evaluation</li>
+                <li>Technical reporting</li>
+              </ul>
+            </div>
+          </details>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="contact" id="contact" aria-labelledby="contact-h">
+    <div class="wrap">
+      <h2 id="contact-h">Get in touch</h2>
+      <p>If you have a sensing, vision or control problem that needs testing on real hardware, send me a message.</p>
+      <ul class="social">
+        <li><a class="email" href="mailto:mansafmaheen@gmail.com" title="mansafmaheen@gmail.com"><span class="gmail-mark" aria-hidden="true"></span><span class="sr-only">Email mansafmaheen@gmail.com</span></a></li>
+        <li><a class="linkedin" href="https://www.linkedin.com/in/mansaf-maheen" rel="me" title="LinkedIn"><i class="fa-brands fa-linkedin" aria-hidden="true"></i><span class="sr-only">LinkedIn profile</span></a></li>
+        <li><a class="github" href="https://github.com/mansaf2022" rel="me" title="GitHub"><i class="fa-brands fa-github" aria-hidden="true"></i><span class="sr-only">GitHub profile</span></a></li>
+      </ul>
+      <button type="button" class="btn" data-open-cv>Request my CV</button>
+    </div>
+  </section>
+
+  <dialog class="cv-dialog" id="cv-dialog" aria-labelledby="cv-title">
+    <div class="cv-inner">
+      <button type="button" class="close-x" data-close-cv aria-label="Close">&times;</button>
+      <div id="cv-form-wrap">
+        <h2 id="cv-title">Request my CV</h2>
+        <p class="cv-intro">Tell me a little about yourself and I'll email my CV to you.</p>
+        <form id="cv-form" novalidate>
+          <div class="field">
+            <label for="cv-name">Your name</label>
+            <input id="cv-name" name="name" type="text" autocomplete="name" required maxlength="100">
+          </div>
+          <div class="field">
+            <label for="cv-email">Email address</label>
+            <input id="cv-email" name="email" type="email" autocomplete="email" required maxlength="150">
+          </div>
+          <div class="field">
+            <label for="cv-company">Company <span class="opt">(optional)</span></label>
+            <input id="cv-company" name="company" type="text" autocomplete="organization" maxlength="150">
+          </div>
+          <div class="field">
+            <label for="cv-purpose">Purpose of request</label>
+            <select id="cv-purpose" name="purpose" required>
+              <option value="">Choose one</option>
+              <option>Job opportunity</option>
+              <option>Freelance or contract project</option>
+              <option>Collaboration</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="cv-message">Message <span class="opt">(optional)</span></label>
+            <textarea id="cv-message" name="message" maxlength="2000"></textarea>
+          </div>
+          <!-- Spam trap: people never see or fill this; bots often do -->
+          <div class="hp" aria-hidden="true">
+            <label for="cv-botcheck">Leave this empty</label>
+            <input id="cv-botcheck" type="checkbox" name="botcheck" tabindex="-1" autocomplete="off">
+          </div>
+          <p class="privacy">I only use these details to reply to your request. They aren't shared or added to any mailing list.</p>
+          <button type="submit" class="btn primary" id="cv-submit">Send request</button>
+          <p class="form-status" id="cv-status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+      <div class="cv-done" id="cv-done" hidden>
+        <h2 tabindex="-1" id="cv-done-title">Request sent</h2>
+        <p>Thanks. I'll email my CV to you shortly.</p>
+        <button type="button" class="btn" data-close-cv>Close</button>
+      </div>
+    </div>
+  </dialog>
+</main>
+
+<footer>
+  <div class="wrap">&copy; <span id="year">2026</span> Mansaf Maheen. Client details are withheld where they are confidential.</div>
+</footer>
+
+<script>
+  // Draws the schematic balance trace in the hero. Decorative: the figure caption carries the meaning.
+  (function () {
+    var x0 = 70, split = 385, x1 = 700, mid = 85, amp = 55;
+    var cycles = 4.5, pts = [], i, n = 180;
+    for (i = 0; i <= n; i++) {
+      var x = x0 + (split - x0) * (i / n);
+      var y = mid - Math.sin(2 * Math.PI * cycles * (i / n)) * amp;
+      pts.push((i === 0 ? "M" : "L") + x.toFixed(1) + " " + y.toFixed(1));
+    }
+    var before = document.getElementById("before");
+    var after = document.getElementById("after");
+    if (!before || !after) return;
+    before.setAttribute("d", pts.join(" "));
+    after.setAttribute("d", "M" + split + " " + mid + " L" + x1 + " " + mid);
+    [before, after].forEach(function (p) {
+      p.style.setProperty("--len", Math.ceil(p.getTotalLength()) + 2);
+    });
+  })();
+
+  // Open every detail panel when someone prints or saves the page as PDF, then restore.
+  (function () {
+    var opened = [];
+    window.addEventListener("beforeprint", function () {
+      document.querySelectorAll("details:not([open])").forEach(function (d) { d.open = true; opened.push(d); });
+    });
+    window.addEventListener("afterprint", function () {
+      opened.forEach(function (d) { d.open = false; }); opened = [];
+    });
+  })();
+
+  // CV request form. Requests are emailed to Mansaf through Web3Forms (web3forms.com).
+  (function () {
+    // Web3Forms access key (public by design; requests go to mansafmaheen@gmail.com)
+    var ACCESS_KEY = "85bc5fd2-7614-4516-aefb-37de7185d5a3";
+    var FALLBACK = "mansafmaheen@gmail.com";
+
+    var dialog = document.getElementById("cv-dialog");
+    var form = document.getElementById("cv-form");
+    var wrap = document.getElementById("cv-form-wrap");
+    var done = document.getElementById("cv-done");
+    var status = document.getElementById("cv-status");
+    var submit = document.getElementById("cv-submit");
+    if (!dialog || !form) return;
+
+    function open() {
+      if (typeof dialog.showModal !== "function") { window.location.href = "mailto:" + FALLBACK + "?subject=CV%20request"; return; }
+      dialog.showModal();
+      document.getElementById("cv-name").focus();
+    }
+    function close() { dialog.close(); }
+    function fail(msg) {
+      status.className = "form-status error";
+      status.innerHTML = msg + ' You can also email me at <a href="mailto:' + FALLBACK + '?subject=CV%20request">' + FALLBACK + "</a>.";
+    }
+
+    document.querySelectorAll("[data-open-cv]").forEach(function (b) { b.addEventListener("click", open); });
+    dialog.addEventListener("click", function (e) {
+      if (e.target === dialog || e.target.closest("[data-close-cv]")) close();
+    });
+    dialog.addEventListener("close", function () {
+      if (!done.hidden) { form.reset(); done.hidden = true; wrap.hidden = false; status.textContent = ""; }
+    });
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      status.className = "form-status"; status.textContent = "";
+      if (!form.checkValidity()) {
+        var bad = form.querySelector(":invalid");
+        var label = form.querySelector('label[for="' + bad.id + '"]');
+        status.className = "form-status error";
+        status.textContent = (bad.type === "email" && bad.value) ? "Enter a valid email address, like name@company.com." : "Fill in " + (label ? label.firstChild.textContent.trim().toLowerCase() : "the required fields") + " to send your request.";
+        bad.focus();
+        return;
+      }
+      if (form.elements["botcheck"].checked) return;
+      if (ACCESS_KEY.indexOf("YOUR_") === 0) { fail("This form isn't connected yet."); return; }
+
+      var data = {
+        access_key: ACCESS_KEY,
+        subject: "CV request from " + form.elements["name"].value.trim() + " (" + form.elements["purpose"].value + ")",
+        from_name: "Portfolio website",
+        name: form.elements["name"].value.trim(),
+        email: form.elements["email"].value.trim(),
+        company: form.elements["company"].value.trim() || "Not given",
+        purpose: form.elements["purpose"].value,
+        message: form.elements["message"].value.trim() || "No message",
+        botcheck: false
+      };
+      submit.disabled = true; submit.textContent = "Sending...";
+      fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify(data)
+      })
+        .then(function (r) { return r.json().catch(function () { return {}; }); })
+        .then(function (res) {
+          if (res && res.success) {
+            wrap.hidden = true; done.hidden = false;
+            document.getElementById("cv-done-title").focus();
+          } else {
+            fail("Your request didn't send.");
+          }
+        })
+        .catch(function () { fail("Your request didn't send. Check your connection and try again."); })
+        .then(function () { submit.disabled = false; submit.textContent = "Send request"; });
+    });
+  })();
+
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
