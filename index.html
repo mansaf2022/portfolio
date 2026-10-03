@@ -192,10 +192,20 @@
   .cv-done p { margin: 0 0 1.25rem; }
   .contact .btn { margin-top: 1.5rem; }
 
+  /* Project animations (schematic SVG, drawn by the script at the end of the page) */
+  .anim { display: block; width: 100%; max-width: 30rem; height: auto; margin-top: 1.25rem; background: #fff; border: 1px solid var(--rule); border-radius: 8px; }
+  .anim text { font-family: var(--display); }
+  .anim .lbl { font-size: 11px; fill: var(--graphite); }
+  .anim .phase { font-size: 12px; font-weight: 600; fill: var(--ink); }
+  .anim .tag { font-size: 10px; font-weight: 600; }
+  .anim .note { font-size: 9px; fill: #8a95a0; }
+  .anim .accent { fill: var(--accent); }
+  .anim .accent-stroke { stroke: var(--accent); }
+
   /* Printing or saving as PDF: show every detail panel and drop the interactive parts */
   @media print {
     body { background: #fff; font-size: 10.5pt; }
-    .site-head nav, .skip, .actions, summary, .trace, .cv-dialog, .contact .btn { display: none; }
+    .site-head nav, .skip, .actions, summary, .trace, .cv-dialog, .contact .btn, .anim { display: none; }
     .hero { padding-block: 0 1rem; }
     .project { break-inside: avoid-page; padding-block: 1rem; }
     .project > :first-child { position: static; }
@@ -272,6 +282,7 @@
           <p class="context">Client project for UKAEA</p>
           <p class="pitch">A KUKA robot cell that finds, picks and threads bolts using force feedback, built to show automated fastening is feasible for remote fusion-energy maintenance.</p>
           <ul class="tags" aria-label="Key tools"><li>KUKA KRL</li><li>Force/torque control</li><li>EtherCAT</li><li>KUKA Sim</li><li>TwinCAT</li></ul>
+          <svg class="anim" id="s-kuka" viewBox="0 0 320 200" role="img" aria-label="Schematic: a robot arm searches for a hole, inserts a bolt and threads it while a force bar rises past its threshold."></svg>
         </div>
         <div>
           <ul class="results">
@@ -313,6 +324,7 @@
           <p class="context">Visicon Ltd, UK</p>
           <p class="pitch">A multi-camera Cognex vision system I designed at Visicon Ltd that checks orientation, print side and position of PET dog-food bags using 3D, 2D and deep learning.</p>
           <ul class="tags" aria-label="Key tools"><li>Cognex VisionPro</li><li>3D inspection</li><li>Deep learning</li><li>C#</li><li>HMI</li></ul>
+          <svg class="anim" id="s-pet" viewBox="0 0 320 200" role="img" aria-label="Schematic: a camera scans four bags; three pass and one with its print on the wrong side is flagged."></svg>
         </div>
         <div>
           <ul class="results">
@@ -359,6 +371,7 @@
           <p class="context">MSc dissertation, Newcastle University</p>
           <p class="pitch">A prototype camera-guided robotic arm that detects scale-model batteries, reads their LED charge state and sorts them, aimed at giving electric two-wheeler riders only fully charged units.</p>
           <ul class="tags" aria-label="Key tools"><li>Python</li><li>OpenCV</li><li>MyCobot 280</li><li>Creo</li><li>3D printing</li></ul>
+          <svg class="anim" id="s-battery" viewBox="0 0 320 200" role="img" aria-label="Schematic: a camera detects a red low-charge battery, the arm moves it to the shelf and brings a green charged battery back."></svg>
         </div>
         <div>
           <ul class="results">
@@ -408,6 +421,7 @@
           <p class="context">Freenove kit rebuilt</p>
           <p class="pitch">Over seven months I turned a kit robot dog into a sensing, self-protecting robot with on-device ML, smooth motion, self-balancing and fall safety.</p>
           <ul class="tags" aria-label="Key tools"><li>Python</li><li>Edge Impulse</li><li>IMU sensor fusion</li><li>Control systems</li><li>Raspberry Pi</li></ul>
+          <svg class="anim" id="s-dog" viewBox="0 0 320 200" role="img" aria-label="Schematic: with the stock filter the body wobbles; with the replacement controller the platform tilts and the body stays level."></svg>
         </div>
         <div>
           <ul class="results">
@@ -461,6 +475,7 @@
           <p class="context">Work project, built with Literal Labs ModelMill</p>
           <p class="pitch">A compact logic-based model on a Raspberry Pi 5 model train detects staged track obstructions from vibration, at a fraction of conventional compute cost.</p>
           <ul class="tags" aria-label="Key tools"><li>C/C++</li><li>Python</li><li>Logic-based networks</li><li>XGBoost</li><li>Raspberry Pi 5</li></ul>
+          <svg class="anim" id="s-rail" viewBox="0 0 320 200" role="img" aria-label="Schematic: a model train passes an obstruction and the vibration trace spikes, raising a detection."></svg>
         </div>
         <div>
           <ul class="results">
@@ -500,6 +515,7 @@
           <p class="context">Work project, built with Literal Labs ModelMill</p>
           <p class="pitch">Vibration data from a model V8 rig, on which a 51.9 KiB binary LBN model reached 0.94 accuracy at 0.073 ms per prediction.</p>
           <ul class="tags" aria-label="Key tools"><li>Data acquisition</li><li>Python</li><li>LBN models</li><li>scikit-learn</li><li>Raspberry Pi 5</li></ul>
+          <svg class="anim" id="s-gear" viewBox="0 0 320 200" role="img" aria-label="Schematic: a gear with a missing tooth turns and the vibration trace shows an impact each time the gap meets the pinion."></svg>
         </div>
         <div>
           <ul class="results">
@@ -714,6 +730,422 @@
   })();
 
   document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+<script>
+// Project animations: schematic illustrations, not recordings of the real rigs.
+(function () {
+  "use strict";
+  var NS = "http://www.w3.org/2000/svg";
+  var C = { ink: "#16202b", graphite: "#55616d", rule: "#cdd5dc", light: "#eef1f5", red: "#c0392b", amber: "#c98a12", green: "#1f8a4c", paper: "#ffffff" };
+
+  // ---------- helpers ----------
+  function el(parent, name, attrs) {
+    var e = document.createElementNS(NS, name);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    parent.appendChild(e);
+    return e;
+  }
+  function set(e, attrs) { for (var k in attrs) e.setAttribute(k, attrs[k]); }
+  function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+  function seg(t, a, b) { return clamp((t - a) / (b - a), 0, 1); }
+  function ease(p) { return p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2; }
+  function lerp(a, b, p) { return a + (b - a) * p; }
+  function noise(x) { return Math.sin(x * 12.9898) * 0.5 + Math.sin(x * 4.1414 + 1.3) * 0.3 + Math.sin(x * 27.17 + 0.7) * 0.2; }
+
+  // Two-link inverse kinematics, elbow raised
+  function ik(bx, by, L1, L2, px, py) {
+    var dx = px - bx, dy = py - by;
+    var d = Math.min(Math.hypot(dx, dy), L1 + L2 - 0.01);
+    var a = Math.atan2(dy, dx);
+    var c = Math.acos(clamp((L1 * L1 + d * d - L2 * L2) / (2 * L1 * d), -1, 1));
+    var t1 = a - c;
+    return { ex: bx + L1 * Math.cos(t1), ey: by + L1 * Math.sin(t1) };
+  }
+
+  function armParts(g, w1, w2) {
+    return {
+      l1: el(g, "line", { stroke: C.ink, "stroke-width": w1, "stroke-linecap": "round" }),
+      l2: el(g, "line", { stroke: C.ink, "stroke-width": w2, "stroke-linecap": "round" }),
+      j1: el(g, "circle", { r: w1 * 0.75, fill: C.paper, stroke: C.ink, "stroke-width": 2 }),
+      j2: el(g, "circle", { r: w2 * 0.8, fill: C.paper, stroke: C.ink, "stroke-width": 2 })
+    };
+  }
+  function drawArm(a, bx, by, ex, ey, px, py) {
+    set(a.l1, { x1: bx, y1: by, x2: ex, y2: ey });
+    set(a.l2, { x1: ex, y1: ey, x2: px, y2: py });
+    set(a.j1, { cx: bx, cy: by });
+    set(a.j2, { cx: ex, cy: ey });
+  }
+
+
+  // Side view of a six-axis arm: J1 base swivel, J2 shoulder, J3 elbow, J4 forearm roll,
+  // J5 wrist pitch (keeps the tool pointing down), J6 flange rotation.
+  function arm6(g, o) {
+    var outline = o.outline;
+    function L(w, color) { return el(g, "line", { stroke: color, "stroke-width": w, "stroke-linecap": "round" }); }
+    el(g, "rect", { x: o.bx - o.pw / 2, y: o.groundY - o.ph, width: o.pw, height: o.ph, rx: 3, fill: o.dark });
+    var turretTop = o.sy - 6, turretBottom = o.groundY - o.ph;
+    el(g, "rect", { x: o.bx - o.tw / 2, y: turretTop, width: o.tw, height: turretBottom - turretTop, rx: 4, fill: o.body, stroke: outline || "none", "stroke-width": outline ? 1.2 : 0 });
+    el(g, "ellipse", { cx: o.bx, cy: turretBottom - 3, rx: o.tw / 2 + 2, ry: 3.2, fill: o.dark });
+    var j1dot = el(g, "circle", { r: 1.8, fill: "#fff" });
+    var up0 = outline ? L(o.w1 + 2.4, outline) : null, up = L(o.w1, o.body);
+    var rear0 = outline ? L(o.w2 + 4.4, outline) : null, rear = L(o.w2 + 2, o.body);
+    var fo0 = outline ? L(o.w2 + 2.4, outline) : null, fo = L(o.w2, o.body);
+    var j4 = el(g, "line", { stroke: o.dark, "stroke-width": 2.2 });
+    var wr0 = outline ? L(o.w3 + 2.4, outline) : null, wr = L(o.w3, o.body);
+    function joint(r) { var a = el(g, "circle", { r: r, fill: o.dark }); var b = el(g, "circle", { r: r * 0.42, fill: o.cap || "#fff" }); return [a, b]; }
+    var J2 = joint(o.w1 * 0.66), J3 = joint(o.w2 * 0.72), J5 = joint(o.w3 * 0.78);
+    var flange = el(g, "rect", { width: 14, height: 4, rx: 1, fill: o.dark });
+    var j6 = el(g, "line", { stroke: "#fff", "stroke-width": 1.6 });
+    function P(a, x, y) { if (!a) return; }
+    function line(e, x1, y1, x2, y2) { if (e) set(e, { x1: x1, y1: y1, x2: x2, y2: y2 }); }
+    return { update: function (fx, fy, a1, a6) {
+      var wx = fx, wy = fy - o.wl;
+      var e = ik(o.bx, o.sy, o.L1, o.L2, wx, wy), ex = e.ex, ey = e.ey;
+      line(up0, o.bx, o.sy, ex, ey); line(up, o.bx, o.sy, ex, ey);
+      var rx = ex + (ex - wx) * 0.2, ry = ey + (ey - wy) * 0.2;
+      line(rear0, ex, ey, rx, ry); line(rear, ex, ey, rx, ry);
+      line(fo0, ex, ey, wx, wy); line(fo, ex, ey, wx, wy);
+      var dx = wx - ex, dy = wy - ey, len = Math.hypot(dx, dy) || 1, nx = -dy / len, ny = dx / len;
+      var k = 0.55 + 0.06 * Math.sin(a1 * 3), px = ex + dx * k, py = ey + dy * k, h = o.w2 * 0.62;
+      line(j4, px - nx * h, py - ny * h, px + nx * h, py + ny * h);
+      line(wr0, wx, wy, fx, fy - 4); line(wr, wx, wy, fx, fy - 4);
+      set(J2[0], { cx: o.bx, cy: o.sy }); set(J2[1], { cx: o.bx, cy: o.sy });
+      set(J3[0], { cx: ex, cy: ey }); set(J3[1], { cx: ex, cy: ey });
+      set(J5[0], { cx: wx, cy: wy }); set(J5[1], { cx: wx, cy: wy });
+      set(flange, { x: fx - 7, y: fy - 4 });
+      var hw = 6 * Math.abs(Math.cos(a6)) + 0.4; set(j6, { x1: fx - hw, x2: fx + hw, y1: fy - 2, y2: fy - 2 });
+      set(j1dot, { cx: o.bx + (o.tw / 2) * Math.sin(a1), cy: o.groundY - o.ph - 3 });
+    }};
+  }
+
+  var scenes = [];
+
+  // ---------- 1. KUKA bolting ----------
+  (function () {
+    var s = document.getElementById("s-kuka");
+    var ORANGE = "#ef7a12", DARK = "#2d3136";
+    el(s, "line", { x1: 10, y1: 180, x2: 310, y2: 180, stroke: C.rule, "stroke-width": 2 });
+    el(s, "rect", { x: 140, y: 140, width: 55, height: 14, fill: C.light, stroke: C.rule });
+    el(s, "rect", { x: 205, y: 140, width: 55, height: 14, fill: C.light, stroke: C.rule });
+    el(s, "rect", { x: 195, y: 154, width: 10, height: 26, fill: C.light, stroke: C.rule });
+    var arm = arm6(s, { bx: 58, groundY: 180, pw: 44, ph: 12, tw: 26, sy: 126, L1: 84, L2: 82, wl: 18, w1: 13, w2: 10, w3: 8, body: ORANGE, dark: DARK, cap: "#f6b77a" });
+    var bolt = el(s, "g", {});
+    el(bolt, "rect", { x: -7, y: 0, width: 14, height: 6, rx: 1, fill: C.graphite });
+    el(bolt, "rect", { x: -3, y: 6, width: 6, height: 22, fill: "#9aa5b1" });
+    var threads = [];
+    for (var i = 0; i < 6; i++) threads.push(el(bolt, "line", { x1: -3, x2: 3, stroke: C.graphite, "stroke-width": 1 }));
+    var grip = el(s, "g", {});
+    el(grip, "rect", { x: -10, y: -6, width: 20, height: 6, rx: 2, fill: DARK });
+    var jawL = el(grip, "rect", { y: -2, width: 4, height: 12, fill: DARK });
+    var jawR = el(grip, "rect", { y: -2, width: 4, height: 12, fill: DARK });
+    el(s, "text", { x: 298, y: 32, "text-anchor": "middle", class: "lbl" }).textContent = "Fz";
+    el(s, "rect", { x: 291, y: 40, width: 14, height: 120, rx: 3, fill: C.paper, stroke: C.rule });
+    var bar = el(s, "rect", { x: 293, width: 10, rx: 2, class: "accent" });
+    el(s, "line", { x1: 286, x2: 310, y1: 76, y2: 76, stroke: C.ink, "stroke-dasharray": "3 2" });
+    var phase = el(s, "text", { x: 12, y: 24, class: "phase" });
+    el(s, "text", { x: 12, y: 196, class: "note" }).textContent = "Schematic";
+    var home = { x: 150, y: 74 };
+
+    scenes.push({ el: s, period: 7, draw: function (t) {
+      // (px, py) is the top of the bolt head
+      var px = home.x, py = home.y, f = 0, rot = 0, attached = true, open = 0, label = "Approach", boltOpacity = 1;
+      if (t < 1) { var p = ease(seg(t, 0, 1)); px = lerp(home.x, 200, p); py = lerp(home.y, 98, p); }
+      else if (t < 2.4) { var p2 = seg(t, 1, 2.4); px = 200 + 8 * Math.sin(p2 * Math.PI * 4) * (1 - p2); py = lerp(98, 112, p2); label = "Search"; f = p2 > 0.9 ? 0.1 : 0; }
+      else if (t < 3.2) { var p3 = seg(t, 2.4, 3.2); px = 200; py = lerp(112, 124, ease(p3)); f = lerp(0.1, 0.45, p3); label = "Insert"; }
+      else if (t < 5) { var p4 = seg(t, 3.2, 5); px = 200; py = lerp(124, 130, p4); f = lerp(0.45, 0.85, p4); rot = p4 * 10; label = "Thread (J6 turns the bolt)"; }
+      else { px = 200; py = 130; f = 0.85; label = "Threaded";
+        if (t >= 5.2) { attached = false; open = 1; var p5 = ease(seg(t, 5.4, 6.6)); px = lerp(200, home.x, p5); py = lerp(130, home.y, p5); f = lerp(0.85, 0, seg(t, 5.2, 5.8)); }
+        boltOpacity = 1 - seg(t, 6.5, 6.95);
+      }
+      var a1 = (px - 160) / 55;
+      arm.update(px, py - 6, a1, rot * Math.PI);
+      set(grip, { transform: "translate(" + px + "," + py + ")" });
+      set(jawL, { x: -10 - open * 3 }); set(jawR, { x: 6 + open * 3 });
+      var bx = attached ? px : 200, by = attached ? py : 130;
+      set(bolt, { transform: "translate(" + bx + "," + by + ")", opacity: boltOpacity });
+      for (var k = 0; k < threads.length; k++) { var yy = 8 + ((k * 3.5 + rot * 3.5) % 21); set(threads[k], { y1: yy, y2: yy + 2.5 }); }
+      var h = f * 116; set(bar, { y: 158 - h, height: Math.max(h, 0.01) });
+      phase.textContent = label;
+    }});
+  })();
+
+  // ---------- 2. PET bag inspection ----------
+  (function () {
+    var s = document.getElementById("s-pet");
+    // camera
+    el(s, "rect", { x: 148, y: 8, width: 24, height: 14, rx: 3, fill: C.ink });
+    el(s, "rect", { x: 155, y: 22, width: 10, height: 5, fill: C.ink });
+    var beam = el(s, "polygon", { class: "accent", opacity: 0.08 });
+    var line = el(s, "line", { y1: 44, y2: 178, "stroke-width": 2, class: "accent-stroke" });
+    var bags = [[60, 52], [168, 52], [60, 116], [168, 116]], flipped = 3, outlines = [], tags = [];
+    bags.forEach(function (b, i) {
+      el(s, "rect", { x: b[0], y: b[1], width: 92, height: 54, rx: 12, fill: C.light, stroke: C.graphite, "stroke-width": 1 });
+      var px = i === flipped ? b[0] + 66 : b[0] + 10;
+      el(s, "rect", { x: px, y: b[1] + 10, width: 16, height: 34, rx: 3, class: "accent", opacity: 0.85 });
+      for (var j = 0; j < 3; j++) el(s, "line", { x1: b[0] + 34, x2: b[0] + 58, y1: b[1] + 19 + j * 8, y2: b[1] + 19 + j * 8, stroke: C.rule, "stroke-width": 2 });
+      outlines.push(el(s, "rect", { x: b[0] - 4, y: b[1] - 4, width: 100, height: 62, rx: 14, fill: "none", "stroke-width": 2.5, opacity: 0 }));
+      var tg = el(s, "g", { opacity: 0 });
+      var ok = i !== flipped;
+      el(tg, "rect", { x: b[0] + 62, y: b[1] - 11, width: ok ? 26 : 52, height: 14, rx: 7, fill: ok ? C.green : C.red });
+      el(tg, "text", { x: b[0] + 62 + (ok ? 13 : 26), y: b[1] - 1, "text-anchor": "middle", class: "tag", fill: "#fff" }).textContent = ok ? "OK" : "NOT OK";
+      tags.push(tg);
+      outlines[i].setAttribute("stroke", ok ? C.green : C.red);
+    });
+    var res = el(s, "g", { opacity: 0 });
+    el(res, "text", { x: 160, y: 194, "text-anchor": "middle", class: "phase" }).textContent = "Result: print NOT OK (1 of 4 bags)";
+    el(s, "text", { x: 8, y: 16, class: "note" }).textContent = "Schematic";
+
+    scenes.push({ el: s, period: 6, draw: function (t) {
+      var x = lerp(48, 272, seg(t, 0.4, 3.4));
+      var scanning = t > 0.3 && t < 3.6;
+      set(line, { x1: x, x2: x, opacity: scanning ? 1 : 0 });
+      set(beam, { points: "160,27 " + (x - 6) + ",178 " + (x + 6) + ",178", opacity: scanning ? 0.1 : 0 });
+      var fade = 1 - seg(t, 5.4, 5.9);
+      bags.forEach(function (b, i) {
+        var hit = x > b[0] + 46 || t >= 3.4;
+        var on = (hit && t > 0.4 ? 1 : 0) * fade;
+        set(outlines[i], { opacity: on }); set(tags[i], { opacity: on });
+      });
+      set(res, { opacity: seg(t, 3.6, 4) * fade });
+    }});
+  })();
+
+  // ---------- 3. Battery swapping ----------
+  (function () {
+    var s = document.getElementById("s-battery");
+    el(s, "line", { x1: 10, y1: 170, x2: 310, y2: 170, stroke: C.rule, "stroke-width": 2 });
+    el(s, "rect", { x: 126, y: 168, width: 40, height: 4, rx: 2, fill: C.rule });
+    el(s, "text", { x: 146, y: 186, "text-anchor": "middle", class: "lbl" }).textContent = "Work area";
+    var rows = [C.green, C.amber, C.red], slot = function (r, c) { return { x: 214 + c * 40, y: 66 + r * 34 }; };
+    for (var r = 0; r < 3; r++) for (var c = 0; c < 2; c++) {
+      var p = slot(r, c);
+      el(s, "rect", { x: p.x - 16, y: p.y - 4, width: 32, height: 30, fill: "none", stroke: C.rule });
+      el(s, "rect", { x: p.x - 16, y: p.y + 24, width: 32, height: 3, fill: rows[r] });
+    }
+    el(s, "text", { x: 254, y: 186, "text-anchor": "middle", class: "lbl" }).textContent = "Shelf";
+    el(s, "rect", { x: 133, y: 10, width: 26, height: 14, rx: 3, fill: C.ink });
+    el(s, "polygon", { points: "146,24 132,144 160,144", class: "accent", opacity: 0.07 });
+    var det = el(s, "g", { opacity: 0 });
+    el(det, "rect", { x: 132, y: 144, width: 28, height: 28, rx: 3, fill: "none", "stroke-width": 2, "stroke-dasharray": "4 2", class: "accent-stroke" });
+    el(det, "rect", { x: 127, y: 126, width: 38, height: 14, rx: 7, class: "accent" });
+    el(det, "text", { x: 146, y: 136, "text-anchor": "middle", class: "tag", fill: "#fff" }).textContent = "Low";
+    function cube(color) {
+      var g = el(s, "g", {});
+      el(g, "rect", { x: -10, y: 0, width: 20, height: 20, rx: 2, fill: C.light, stroke: C.graphite });
+      el(g, "circle", { cx: 0, cy: 10, r: 4, fill: color });
+      return g;
+    }
+    var red = cube(C.red), green = cube(C.green);
+    var arm = arm6(s, { bx: 76, groundY: 170, pw: 34, ph: 10, tw: 18, sy: 132, L1: 100, L2: 100, wl: 14, w1: 10, w2: 8, w3: 7, body: "#f4f6f8", outline: "#9aa5b1", dark: C.ink, cap: "#9aa5b1" });
+    var grip = el(s, "g", {});
+    el(grip, "rect", { x: -9, y: -6, width: 18, height: 6, rx: 2, fill: C.ink });
+    el(grip, "rect", { x: -9, y: -1, width: 3, height: 6, fill: C.ink });
+    el(grip, "rect", { x: 6, y: -1, width: 3, height: 6, fill: C.ink });
+    var phase = el(s, "text", { x: 308, y: 24, "text-anchor": "end", class: "phase" });
+    el(s, "text", { x: 12, y: 196, class: "note" }).textContent = "Schematic";
+    var home = { x: 168, y: 86 };
+    var work = { x: 146, y: 148 }, redSlot = slot(2, 0), greenSlot = slot(0, 1);
+
+    scenes.push({ el: s, period: 7.5, draw: function (t) {
+      // (tx, ty) is the top of the carried cube
+      var tx = home.x, ty = home.y, rp = work, gp = greenSlot, label = "Detect";
+      function go(a, b, t0, t1) { var p = ease(seg(t, t0, t1)); var lift = Math.sin(p * Math.PI) * 18; return { x: lerp(a.x, b.x, p), y: lerp(a.y, b.y, p) - lift }; }
+      var detOn = t > 0.4 && t < 1.6;
+      if (t < 1.6) { var q = go(home, work, 0.9, 1.6); tx = q.x; ty = q.y; if (t > 1.4) label = "Pick low battery"; }
+      else if (t < 3) { var q1 = go(work, redSlot, 1.6, 3); tx = q1.x; ty = q1.y; rp = { x: tx, y: ty }; label = "Place on red shelf"; }
+      else if (t < 3.2) { tx = redSlot.x; ty = redSlot.y; rp = redSlot; label = "Place on red shelf"; }
+      else if (t < 4.2) { var q2 = go(redSlot, greenSlot, 3.2, 4.2); tx = q2.x; ty = q2.y; rp = redSlot; label = "Pick charged battery"; }
+      else if (t < 5.6) { var q3 = go(greenSlot, work, 4.2, 5.6); tx = q3.x; ty = q3.y; rp = redSlot; gp = { x: tx, y: ty }; label = "Return to work area"; }
+      else { var q4 = go(work, home, 5.8, 6.8); tx = q4.x; ty = q4.y; rp = redSlot; gp = work; label = "Swap complete"; }
+      arm.update(tx, ty - 6, (tx - 165) / 70, 0);
+      set(grip, { transform: "translate(" + tx + "," + ty + ")" });
+      var fade = 1 - seg(t, 7, 7.45);
+      set(red, { transform: "translate(" + rp.x + "," + rp.y + ")", opacity: t > 7 ? fade : seg(t, 0, 0.15) });
+      set(green, { transform: "translate(" + gp.x + "," + gp.y + ")", opacity: t > 7 ? fade : seg(t, 0, 0.15) });
+      set(det, { opacity: detOn ? 1 : 0 });
+      phase.textContent = label;
+    }});
+  })();
+
+  // ---------- 4. Robot dog balance ----------
+  (function () {
+    var s = document.getElementById("s-dog");
+    var plat = el(s, "line", { stroke: C.graphite, "stroke-width": 5, "stroke-linecap": "round" });
+    el(s, "polygon", { points: "160,168 150,186 170,186", fill: C.rule });
+    var legs = [], knees = [];
+    for (var i = 0; i < 4; i++) { legs.push(el(s, "polyline", { fill: "none", stroke: C.ink, "stroke-width": i < 2 ? 5 : 4, "stroke-linecap": "round", "stroke-linejoin": "round", opacity: i < 2 ? 1 : 0.45 })); }
+    var body = el(s, "g", {});
+    el(body, "rect", { x: -56, y: -14, width: 112, height: 28, rx: 9, fill: C.ink });
+    el(body, "rect", { x: 48, y: -26, width: 30, height: 22, rx: 6, fill: C.ink });
+    el(body, "circle", { cx: 68, cy: -16, r: 3, fill: "#fff" });
+    el(body, "rect", { x: -30, y: -5, width: 34, height: 6, rx: 3, class: "accent" });
+    // level indicator
+    el(s, "rect", { x: 236, y: 16, width: 70, height: 16, rx: 8, fill: C.paper, stroke: C.rule });
+    el(s, "line", { x1: 271, x2: 271, y1: 16, y2: 32, stroke: C.rule });
+    var bubble = el(s, "circle", { cy: 24, r: 5, class: "accent" });
+    el(s, "text", { x: 271, y: 46, "text-anchor": "middle", class: "lbl" }).textContent = "Body level";
+    var phase = el(s, "text", { x: 12, y: 24, class: "phase" });
+    var sub = el(s, "text", { x: 12, y: 40, class: "lbl" });
+    el(s, "text", { x: 12, y: 196, class: "note" }).textContent = "Schematic";
+
+    scenes.push({ el: s, period: 7, draw: function (t) {
+      var pa = 0, ba = 0, label, subl;
+      if (t < 3) { pa = 0; ba = 9 * Math.sin(t * 2 * Math.PI * (5 / 3)); label = "Stock balance mode"; subl = "Legs oscillate, body shakes"; }
+      else { var tt = t - 3; pa = 6 * ease(seg(tt, 0.3, 0.6)); if (tt > 3.2) pa = 6 * (1 - ease(seg(tt, 3.2, 3.8)));
+        var err = tt < 0.6 ? pa : 0; var dec = tt >= 0.6 ? 6 * Math.exp(-(tt - 0.6) / 0.25) * Math.cos((tt - 0.6) * 9) : err;
+        ba = tt > 3.2 ? 0 : dec; label = "Replacement controller"; subl = tt > 0.3 && tt < 3.2 ? "Platform tilted 6°, body held level" : "Body held level"; }
+      var r = pa * Math.PI / 180, cx = 160, cy = 168;
+      var half = 120;
+      set(plat, { x1: cx - half * Math.cos(r), y1: cy - half * Math.sin(r), x2: cx + half * Math.cos(r), y2: cy + half * Math.sin(r) });
+      var bcx = 160, bcy = 100, br = ba * Math.PI / 180;
+      set(body, { transform: "translate(" + bcx + "," + bcy + ") rotate(" + ba + ")" });
+      var hips = [-42, 40, -30, 52];
+      for (var k = 0; k < 4; k++) {
+        var hx = bcx + hips[k] * Math.cos(br) - 12 * Math.sin(br), hy = bcy + hips[k] * Math.sin(br) + 12 * Math.cos(br);
+        var fxOff = hips[k] * 1.05, fx = cx + fxOff * Math.cos(r), fy = cy + fxOff * Math.sin(r) - 3;
+        var kx = (hx + fx) / 2 + (hips[k] > 0 ? -9 : 9), ky = (hy + fy) / 2;
+        set(legs[k], { points: hx + "," + hy + " " + kx + "," + ky + " " + fx + "," + fy });
+      }
+      set(bubble, { cx: 271 + clamp(ba * 3.2, -28, 28) });
+      phase.textContent = label; sub.textContent = subl;
+    }});
+  })();
+
+  // ---------- 5. Rail fault ----------
+  (function () {
+    var s = document.getElementById("s-rail");
+    var RAIL = 106;
+    el(s, "rect", { x: 0, y: RAIL + 3, width: 320, height: 7, fill: "#e6e9ed" });
+    for (var i = 0; i < 27; i++) el(s, "rect", { x: 2 + i * 12, y: RAIL + 2, width: 7, height: 5, rx: 1, fill: "#a58e74" });
+    el(s, "rect", { x: 0, y: RAIL - 2, width: 320, height: 4, fill: C.graphite });
+    var OBX = 200;
+    el(s, "rect", { x: OBX - 5, y: RAIL - 9, width: 10, height: 7, rx: 1, fill: C.amber });
+    el(s, "text", { x: OBX, y: RAIL + 22, "text-anchor": "middle", class: "lbl" }).textContent = "Obstruction";
+    var train = el(s, "g", {});
+    var WHEELS = [12, 24, 46, 58, 92, 104, 128, 140];
+    // rear car
+    el(train, "rect", { x: 0, y: -36, width: 70, height: 27, rx: 4, fill: "#e9edf1", stroke: C.ink, "stroke-width": 1.4 });
+    // front car with sloped nose
+    el(train, "path", { d: "M78,-36 L134,-36 Q144,-36 150,-24 L152,-15 Q152,-9 146,-9 L78,-9 Z", fill: "#e9edf1", stroke: C.ink, "stroke-width": 1.4 });
+    el(train, "path", { d: "M136,-34 Q143,-33 147,-24 L138,-24 Z", fill: C.ink });
+    // livery stripe
+    el(train, "rect", { x: 1, y: -19, width: 68, height: 3, class: "accent" });
+    el(train, "path", { d: "M79,-19 L150,-19 L151,-16 L79,-16 Z", class: "accent" });
+    // windows and doors
+    [6, 18, 30, 50].forEach(function (x) { el(train, "rect", { x: x, y: -31, width: 9, height: 8, rx: 1, fill: C.ink, opacity: 0.8 }); });
+    [86, 98, 118].forEach(function (x) { el(train, "rect", { x: x, y: -31, width: 9, height: 8, rx: 1, fill: C.ink, opacity: 0.8 }); });
+    el(train, "rect", { x: 41, y: -32, width: 7, height: 21, rx: 1, fill: "none", stroke: C.graphite });
+    el(train, "rect", { x: 109, y: -32, width: 7, height: 21, rx: 1, fill: "none", stroke: C.graphite });
+    // pantograph
+    el(train, "polyline", { points: "96,-36 104,-44 112,-36", fill: "none", stroke: C.ink, "stroke-width": 1.2 });
+    el(train, "line", { x1: 98, x2: 110, y1: -45, y2: -45, stroke: C.ink, "stroke-width": 1.5 });
+    // coupler
+    el(train, "rect", { x: 70, y: -16, width: 8, height: 3, fill: C.ink });
+    // sensor box on the rear car
+    el(train, "rect", { x: 22, y: -9, width: 14, height: 4, rx: 1, class: "accent" });
+    // bogies and wheels
+    [[12, 24], [46, 58], [92, 104], [128, 140]].forEach(function (b) { el(train, "rect", { x: b[0] - 5, y: -9, width: b[1] - b[0] + 10, height: 3, rx: 1, fill: C.ink }); });
+    WHEELS.forEach(function (x) { el(train, "circle", { cx: x, cy: -4, r: 4.2, fill: C.graphite, stroke: C.ink, "stroke-width": 1 }); el(train, "circle", { cx: x, cy: -4, r: 1.2, fill: "#fff" }); });
+    // trace panel
+    el(s, "rect", { x: 10, y: 136, width: 300, height: 50, rx: 4, fill: C.paper, stroke: C.rule });
+    el(s, "line", { x1: 14, x2: 306, y1: 163, y2: 163, stroke: C.rule, "stroke-dasharray": "2 3" });
+    el(s, "text", { x: 16, y: 148, class: "lbl" }).textContent = "Vibration (accel z)";
+    var trace = el(s, "polyline", { fill: "none", "stroke-width": 1.5, class: "accent-stroke", "stroke-linejoin": "round" });
+    var chip = el(s, "g", { opacity: 0 });
+    el(chip, "rect", { x: 186, y: 10, width: 124, height: 20, rx: 10, fill: C.red });
+    el(chip, "text", { x: 248, y: 24, "text-anchor": "middle", class: "tag", fill: "#fff" }).textContent = "Obstruction detected";
+    el(s, "text", { x: 12, y: 24, class: "phase" }).textContent = "Live inference on the Pi";
+    el(s, "text", { x: 12, y: 196, class: "note" }).textContent = "Schematic";
+    var P = 6, X0 = -165, X1 = 330;
+    function trainX(t) { return lerp(X0, X1, t / P); }
+    function bump(wx) { var d = wx - OBX; return Math.exp(-(d * d) / 14); }
+    function contact(x) { var m = 0; WHEELS.forEach(function (w) { m = Math.max(m, bump(x + w)); }); return m; }
+    function val(t) { var x = trainX(t), sum = 0; WHEELS.forEach(function (w) { sum += bump(x + w); }); return 0.1 * noise(t * 9) + 0.75 * sum * Math.sin(t * 70); }
+    var firstHit = (OBX - WHEELS[WHEELS.length - 1] - X0) / (X1 - X0) * P;
+
+    scenes.push({ el: s, period: P, draw: function (t) {
+      var x = trainX(t);
+      set(train, { transform: "translate(" + x + "," + (RAIL - 2 - 3 * contact(x)) + ")" });
+      var pts = [], n = Math.floor(t / P * 260);
+      for (var i = 0; i <= n; i++) { var tt = i / 260 * P; pts.push((14 + i / 260 * 292).toFixed(1) + "," + (163 - 19 * clamp(val(tt), -1.2, 1.2)).toFixed(1)); }
+      set(trace, { points: pts.join(" ") });
+      set(chip, { opacity: t > firstHit + 0.1 && t < firstHit + 2.6 ? 1 : 0 });
+    }});
+  })();
+
+  // ---------- 6. Gear fault ----------
+  (function () {
+    var s = document.getElementById("s-gear");
+    function gearPath(R, teeth, depth, missing) {
+      var d = "", step = Math.PI * 2 / teeth;
+      for (var i = 0; i < teeth; i++) {
+        var a = i * step, rOut = (missing.indexOf(i) >= 0) ? R - depth : R;
+        var pts = [[R - depth, a], [rOut, a + step * 0.15], [rOut, a + step * 0.45], [R - depth, a + step * 0.6]];
+        pts.forEach(function (p, j) { var x = p[0] * Math.cos(p[1]), y = p[0] * Math.sin(p[1]); d += (i === 0 && j === 0 ? "M" : "L") + x.toFixed(2) + "," + y.toFixed(2); });
+        var a2 = a + step; d += "L" + ((R - depth) * Math.cos(a2)).toFixed(2) + "," + ((R - depth) * Math.sin(a2)).toFixed(2);
+      }
+      return d + "Z";
+    }
+    var GX = 100, GY = 74, R = 50, PR = 22;
+    var big = el(s, "g", {});
+    el(big, "path", { d: gearPath(R, 18, 7, [0]), fill: C.light, stroke: C.ink, "stroke-width": 1.5 });
+    el(big, "circle", { r: 9, fill: C.paper, stroke: C.ink, "stroke-width": 1.5 });
+    el(big, "path", { d: "M" + (R - 7) + ",0 a3,3 0 1,0 0.1,0", fill: C.red });
+    var gapMark = el(big, "circle", { cx: R - 3, cy: 0, r: 4, fill: "none", stroke: C.red, "stroke-width": 1.5 });
+    var pin = el(s, "g", {});
+    el(pin, "path", { d: gearPath(PR, 8, 6, []), fill: C.light, stroke: C.ink, "stroke-width": 1.5 });
+    el(pin, "circle", { r: 5, fill: C.paper, stroke: C.ink, "stroke-width": 1.5 });
+    var PX = GX + R + PR - 4;
+    // sensor
+    el(s, "rect", { x: 222, y: 40, width: 30, height: 18, rx: 3, class: "accent" });
+    el(s, "text", { x: 237, y: 70, "text-anchor": "middle", class: "lbl" }).textContent = "IMU, 500 Hz";
+    el(s, "rect", { x: 10, y: 136, width: 300, height: 50, rx: 4, fill: C.paper, stroke: C.rule });
+    el(s, "line", { x1: 14, x2: 306, y1: 161, y2: 161, stroke: C.rule, "stroke-dasharray": "2 3" });
+    el(s, "text", { x: 16, y: 148, class: "lbl" }).textContent = "Vibration";
+    var trace = el(s, "polyline", { fill: "none", "stroke-width": 1.6, class: "accent-stroke", "stroke-linejoin": "round" });
+    var chip = el(s, "g", { opacity: 0 });
+    el(chip, "rect", { x: 206, y: 96, width: 98, height: 20, rx: 10, fill: C.red });
+    el(chip, "text", { x: 255, y: 110, "text-anchor": "middle", class: "tag", fill: "#fff" }).textContent = "Missing tooth";
+    el(s, "text", { x: 196, y: 24, class: "phase" }).textContent = "Faulty gear";
+    el(s, "text", { x: 12, y: 196, class: "note" }).textContent = "Schematic";
+    var P = 6, REV = 3; // one revolution every 3 s
+    // gap starts at angle 0 (facing the pinion); impact when rotation brings it back to 0
+    function hit(t) { var ph = (t / REV) % 1; var d = Math.min(ph, 1 - ph) * REV; return Math.exp(-(d * d) / 0.0025); }
+    function val(t) { return 0.14 * noise(t * 11) + 0.18 * Math.sin(t * 2 * Math.PI * 18 / REV) + 1.1 * hit(t) * Math.sin(t * 90); }
+
+    scenes.push({ el: s, period: P, draw: function (t) {
+      var rot = (t / REV) * 360 + 180; // gap starts opposite the pinion
+      set(big, { transform: "translate(" + GX + "," + GY + ") rotate(" + rot + ")" });
+      set(pin, { transform: "translate(" + PX + "," + GY + ") rotate(" + (-rot * 18 / 8 + 11) + ")" });
+      var pts = [], n = Math.floor(t / P * 240);
+      for (var i = 0; i <= n; i++) { var tt = i / 240 * P; pts.push((14 + i / 240 * 292).toFixed(1) + "," + (161 - 18 * clamp(val(tt + REV / 2), -1.3, 1.3)).toFixed(1)); }
+      set(trace, { points: pts.join(" ") });
+      set(chip, { opacity: ((t + REV / 2) % REV) < 0.7 && t > 1 ? 1 : 0 });
+    }});
+  })();
+
+  // ---------- runner ----------
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var STILL = { "s-kuka": 4.2, "s-pet": 4.2, "s-battery": 2.4, "s-dog": 4.5, "s-rail": 4.6, "s-gear": 3.6 };
+  var visible = new Map(), start = performance.now(), frozen = null;
+  scenes.forEach(function (sc) { visible.set(sc, true); sc.draw(reduce ? STILL[sc.el.id] : 0); });
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { scenes.forEach(function (sc) { if (sc.el === en.target) visible.set(sc, en.isIntersecting); }); });
+    });
+    scenes.forEach(function (sc) { io.observe(sc.el); });
+  }
+  if (!reduce) {
+    (function frame(now) {
+      if (frozen === null) {
+        var t = (now - start) / 1000;
+        scenes.forEach(function (sc) { if (visible.get(sc)) sc.draw(t % sc.period); });
+      }
+      requestAnimationFrame(frame);
+    })(start);
+  }
+})();
 </script>
 </body>
 </html>
