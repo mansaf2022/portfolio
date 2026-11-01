@@ -202,10 +202,93 @@
   .anim .accent { fill: var(--accent); }
   .anim .accent-stroke { stroke: var(--accent); }
 
+  /* Tabs: Projects and Lab are two views of the same page, switched by the address (#lab) */
+  [hidden] { display: none !important; }
+  .site-head nav a[aria-current="page"] { color: var(--ink); text-decoration: underline; text-decoration-thickness: 2px; text-decoration-color: var(--cobalt); text-underline-offset: 0.45em; }
+  h1[tabindex="-1"]:focus { outline: none; }
+
+  /* Lab */
+  .lab-view { --accent: var(--cobalt); --tint: var(--cobalt-tint); }
+  .lab-intro { padding-block: clamp(2.5rem, 6vw, 4.5rem) 1.5rem; }
+  .lab-intro h1 { font-family: var(--display); font-weight: 600; font-size: clamp(2.1rem, 5vw, 3.4rem); line-height: 1.06; letter-spacing: -0.025em; margin: 0 0 0.75rem; }
+  .lab-intro p { margin: 0; max-width: 58ch; font-size: 1.175rem; color: var(--graphite); }
+  .lab-list { padding-block: 0.5rem clamp(2.5rem, 6vw, 4rem); }
+  .lab-grid { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.25rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 21rem), 1fr)); }
+  .lab-card { position: relative; display: flex; flex-direction: column; background: #fff; border: 1px solid var(--rule); border-radius: 10px; padding: 1.4rem 1.4rem 1.25rem; transition: border-color 0.15s ease, box-shadow 0.15s ease; }
+  .lab-card:hover, .lab-card:focus-within { border-color: var(--accent); box-shadow: 0 6px 24px rgba(22, 32, 43, 0.08); }
+  .lab-card h2 { font-family: var(--display); font-weight: 600; font-size: 1.35rem; line-height: 1.2; letter-spacing: -0.01em; margin: 0 0 0.6rem; }
+  .lab-card h2 a { color: var(--ink); text-decoration: none; }
+  .lab-card h2 a::after { content: ""; position: absolute; inset: 0; border-radius: 10px; }
+  .lab-card h2 a:focus-visible { outline: none; }
+  .lab-card:has(h2 a:focus-visible) { outline: 3px solid var(--cobalt); outline-offset: 3px; }
+  .lab-card > p { margin: 0; color: var(--graphite); font-size: 1rem; }
+  .lab-card .tags { max-width: none; margin-top: 1rem; }
+  .card-foot { margin-top: auto; padding-top: 1.1rem; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem 1rem; align-items: baseline; font-family: var(--display); }
+  .card-foot .mini { color: var(--graphite); font-size: 0.9375rem; }
+  .card-foot .more { color: var(--accent); font-weight: 600; }
+  .lab-card:hover .more { text-decoration: underline; }
+
+  .lab-detail { padding-block: 1.5rem clamp(2.5rem, 6vw, 4rem); }
+  .back { display: inline-block; font-family: var(--display); font-weight: 600; padding-block: 0.4rem; }
+  .detail-head { padding-block: 1.25rem 0.5rem; max-width: 46rem; }
+  .detail-head .context { margin-bottom: 0.5rem; }
+  .detail-head h1 { font-family: var(--display); font-weight: 600; font-size: clamp(1.9rem, 4.4vw, 3rem); line-height: 1.08; letter-spacing: -0.02em; margin: 0 0 0.9rem; }
+  .detail-head .lede { margin: 0; font-size: 1.175rem; color: var(--graphite); }
+  .detail-head .tags { max-width: none; }
+  .stats { list-style: none; margin: 2rem 0 0; padding: 0; display: grid; gap: 0.75rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr)); }
+  .stats li { background: #fff; border: 1px solid var(--rule); border-left: 4px solid var(--accent); border-radius: 8px; padding: 0.9rem 1rem; }
+  .stats b { display: block; font-family: var(--display); font-weight: 700; font-size: 1.7rem; line-height: 1.1; color: var(--ink); }
+  .stats span { display: block; margin-top: 0.25rem; font-size: 0.9375rem; color: var(--graphite); line-height: 1.4; }
+  .lab-section { margin-top: clamp(2rem, 5vw, 3rem); max-width: 46rem; }
+  .lab-section.wide { max-width: none; }
+  .lab-section h2 { font-family: var(--display); font-weight: 600; font-size: 1.45rem; letter-spacing: -0.01em; margin: 0 0 0.75rem; }
+  .lab-section p { margin: 0 0 0.75rem; }
+  .lab-section ul.bullets { margin: 0; padding-left: 1.2rem; }
+  .lab-section ul.bullets li { margin-bottom: 0.5rem; }
+  .fixes { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.75rem; }
+  .fixes li { background: #fff; border: 1px solid var(--rule); border-radius: 8px; padding: 0.9rem 1.1rem; }
+  .fixes h3 { font-family: var(--display); font-weight: 600; font-size: 1.05rem; margin: 0 0 0.3rem; }
+  .fixes p { margin: 0; font-size: 1rem; }
+
+  /* Architecture diagram: boxes in a row on wide screens, stacked on phones */
+  .arch { margin: 0; background: #fff; border: 1px solid var(--rule); border-radius: 10px; padding: 1.25rem; }
+  .arch-row { display: grid; gap: 0; align-items: center; grid-template-columns: 1fr; }
+  .arch-node { border: 2px solid var(--ink); border-radius: 8px; padding: 0.8rem 0.9rem; background: var(--paper); font-family: var(--display); }
+  .arch-node b, .arch-disk b, .arch-link b { display: block; font-weight: 600; }
+  .arch-node small, .arch-disk small, .arch-link small { display: block; color: var(--graphite); font-size: 0.875rem; line-height: 1.35; margin-top: 0.15rem; }
+  .arch-node.server { border-color: var(--accent); }
+  .arch-disks { display: grid; gap: 0.6rem; margin-top: 0.75rem; grid-template-columns: 1fr 1fr; }
+  .arch-disk { border: 1px solid var(--rule); border-radius: 6px; padding: 0.55rem 0.65rem; background: #fff; }
+  .arch-disk.ssd { border-top: 3px solid var(--accent); }
+  .arch-disk.hdd { border-top: 3px solid var(--teal); }
+  /* Connector: a dashed wire above and below the label on phones, a wire under the label on wide screens */
+  .arch-link { display: flex; flex-direction: column; align-items: center; text-align: center; font-family: var(--display); padding-block: 0.25rem; }
+  .arch-link b { color: var(--accent); }
+  .arch-label { padding: 0.35rem 0.5rem; }
+  .wire { display: block; width: 0; height: 1.4rem; border-left: 2px dashed var(--accent); position: relative; }
+  .wire.end::after { content: ""; position: absolute; left: -7px; bottom: -2px; border: 6px solid transparent; border-top: 8px solid var(--accent); border-bottom: 0; }
+  .arch figcaption { margin-top: 1rem; font-size: 0.9375rem; color: var(--graphite); }
+  @media (min-width: 52rem) {
+    .arch-row { grid-template-columns: minmax(9rem, 0.9fr) minmax(10rem, 0.9fr) minmax(18rem, 1.7fr); }
+    .arch-link { display: grid; grid-template-columns: 1fr 1fr; align-items: center; padding: 0 0.25rem; }
+    .arch-label { grid-column: 1 / -1; grid-row: 1; padding: 0 0.5rem 0.6rem; }
+    .wire { grid-row: 2; width: auto; height: 0; border-left: 0; border-top: 2px dashed var(--accent); }
+    .wire.end::after { left: auto; right: -2px; bottom: auto; top: -7px; border: 6px solid transparent; border-left: 8px solid var(--accent); border-right: 0; }
+  }
+  @media (max-width: 26rem) { .arch-disks { grid-template-columns: 1fr; } }
+
+  /* Screenshot placeholders: replace each with an <img> when the pictures are ready */
+  .shots { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); }
+  .shot { margin: 0; }
+  .shot-box { aspect-ratio: 16 / 10; display: grid; place-items: center; text-align: center; padding: 1rem; border: 2px dashed #aeb8c2; border-radius: 8px; background: repeating-linear-gradient(135deg, #fff 0 12px, #f6f8fa 12px 24px); color: var(--graphite); font-family: var(--display); font-weight: 500; }
+  .shot img { display: block; width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--rule); }
+  .shot figcaption { margin-top: 0.5rem; font-size: 0.9375rem; color: var(--graphite); }
+  .detail-foot { margin-top: clamp(2rem, 5vw, 3rem); padding-top: 1.25rem; border-top: 1px solid var(--rule); }
+
   /* Printing or saving as PDF: show every detail panel and drop the interactive parts */
   @media print {
     body { background: #fff; font-size: 10.5pt; }
-    .site-head nav, .skip, .actions, summary, .trace, .cv-dialog, .contact .btn, .anim { display: none; }
+    .site-head nav, .skip, .actions, summary, .trace, .cv-dialog, .contact .btn, .anim, .back, .shot-box { display: none; }
     .hero { padding-block: 0 1rem; }
     .project { break-inside: avoid-page; padding-block: 1rem; }
     .project > :first-child { position: static; }
@@ -219,15 +302,16 @@
 <header class="site-head">
   <div class="wrap">
     <a class="brand" href="#top"><b>Mansaf Maheen</b><span>Robotics, vision and embedded ML</span></a>
-    <nav aria-label="Sections">
-      <a href="#industrial">Industrial automation</a>
-      <a href="#embedded-ml">Embedded ML</a>
+    <nav aria-label="Main">
+      <a href="#top" data-tab="work" aria-current="page">Projects</a>
+      <a href="#lab" data-tab="lab">Lab</a>
       <a href="#contact">Contact</a>
     </nav>
   </div>
 </header>
 
 <main id="main">
+  <div class="view" id="view-work">
   <section class="hero" id="top">
     <div class="wrap">
       <h1>I build sensing and control systems on real hardware, then test them until the numbers hold.</h1>
@@ -550,7 +634,142 @@
       </article>
     </div>
   </section>
+  </div>
 
+  <div class="view lab-view" id="view-lab" hidden>
+    <section class="lab-intro" id="lab" aria-labelledby="lab-h">
+      <div class="wrap">
+        <h1 id="lab-h" tabindex="-1">Lab</h1>
+        <p>Things I build and break to learn.</p>
+      </div>
+    </section>
+
+    <section class="lab-list" id="lab-list" aria-label="Lab projects">
+      <div class="wrap">
+        <ul class="lab-grid">
+          <li class="lab-card">
+            <h2><a href="#lab-home-server">Self-Hosted Home Server &amp; Private Cloud</a></h2>
+            <p>Turned a 2011-era desktop PC into an always-on Linux server with a private cloud, reachable securely from anywhere without opening any ports to the internet.</p>
+            <ul class="tags" aria-label="Topics"><li>Linux</li><li>Ubuntu Server</li><li>Docker</li><li>Tailscale</li><li>Networking</li><li>Nextcloud</li><li>Hardware</li></ul>
+            <div class="card-foot">
+              <span class="mini">About 4.7 W at idle, 0 open ports</span>
+              <span class="more" aria-hidden="true">Read the build notes</span>
+            </div>
+          </li>
+          <!-- Add the next Lab project here: copy the <li class="lab-card"> block above and point its link at a new detail section -->
+        </ul>
+      </div>
+    </section>
+
+    <article class="lab-detail" id="lab-home-server" data-title="Self-Hosted Home Server" aria-labelledby="hs-title" hidden>
+      <div class="wrap">
+        <a class="back" href="#lab">Back to Lab</a>
+
+        <header class="detail-head">
+          <p class="context">Lab project</p>
+          <h1 id="hs-title" tabindex="-1">Self-Hosted Home Server &amp; Private Cloud</h1>
+          <p class="lede">Turned a 2011-era desktop PC into an always-on Linux server with a private cloud, reachable securely from anywhere without opening any ports to the internet.</p>
+          <ul class="tags" aria-label="Topics"><li>Linux</li><li>Ubuntu Server</li><li>Docker</li><li>Tailscale</li><li>Networking</li><li>Nextcloud</li><li>Hardware</li></ul>
+        </header>
+
+        <ul class="stats" aria-label="Results">
+          <li><b>≈4.7 W</b><span>CPU power at idle, measured with Intel RAPL</span></li>
+          <li><b>0</b><span>ports open to the internet</span></li>
+          <li><b>Auto</b><span>recovery after a power cut</span></li>
+          <li><b>HTTPS</b><span>access from anywhere, over the private VPN</span></li>
+        </ul>
+
+        <section class="lab-section wide" aria-labelledby="hs-arch">
+          <h2 id="hs-arch">How it fits together</h2>
+          <figure class="arch" role="group" aria-label="Architecture: phone or laptop connects through an encrypted Tailscale tunnel to home-server, which keeps the system, Docker and Nextcloud on an SSD and user files on an HDD.">
+            <div class="arch-row">
+              <div class="arch-node">
+                <b>Phone / Laptop</b>
+                <small>Nextcloud apps, browser, SSH</small>
+              </div>
+              <div class="arch-link">
+                <span class="wire" aria-hidden="true"></span>
+                <div class="arch-label">
+                  <b>Tailscale</b>
+                  <small>WireGuard mesh VPN, encrypted</small>
+                  <small>MagicDNS and HTTPS certificates</small>
+                </div>
+                <span class="wire end" aria-hidden="true"></span>
+              </div>
+              <div class="arch-node server">
+                <b>home-server</b>
+                <small>Ubuntu Server, Docker Compose, Tailscale Serve</small>
+                <div class="arch-disks">
+                  <div class="arch-disk ssd"><b>SSD, 250 GB</b><small>OS, Docker, Nextcloud app, MariaDB database</small></div>
+                  <div class="arch-disk hdd"><b>HDD, 500 GB</b><small>User files (ext4, mounted by label)</small></div>
+                </div>
+              </div>
+            </div>
+            <figcaption>No router ports are forwarded. The only way in is through the encrypted Tailscale tunnel.</figcaption>
+          </figure>
+        </section>
+
+        <section class="lab-section" aria-labelledby="hs-problem">
+          <h2 id="hs-problem">The problem</h2>
+          <p>I wanted my own private cloud for files, photos and contacts, running on hardware I already owned, with secure remote access from my phone and laptop and low power use.</p>
+        </section>
+
+        <section class="lab-section" aria-labelledby="hs-built">
+          <h2 id="hs-built">What I built</h2>
+          <ul class="bullets">
+            <li>Repurposed an old desktop (Intel Pentium G630, 4 GB RAM) as a headless server.</li>
+            <li>Installed Ubuntu Server 26.04 LTS on a 250 GB SSD for the OS and apps, and used a 500 GB HDD for data (ext4, mounted by label so it survives disk-name changes).</li>
+            <li>Set up Tailscale, a WireGuard-based mesh VPN, for remote access with MagicDNS and HTTPS certificates. Nothing is exposed to the public internet.</li>
+            <li>Deployed Nextcloud with MariaDB using Docker Compose: app and database on the SSD, user files on the HDD, served over HTTPS through Tailscale Serve, with cron background jobs.</li>
+            <li>Manage everything remotely over SSH, and the server restarts automatically after power cuts.</li>
+          </ul>
+        </section>
+
+        <section class="lab-section" aria-labelledby="hs-fixes">
+          <h2 id="hs-fixes">Challenges I solved</h2>
+          <ul class="fixes">
+            <li><h3>Boot failure on an older Intel BIOS</h3><p>The board fell through to network (PXE) boot because it wouldn't auto-boot a GPT disk in legacy mode. Fixed by setting the protective-MBR boot flag (<code>parted pmbr_boot</code>) and correcting the BIOS boot order.</p></li>
+            <li><h3>Disk health testing</h3><p>Ran SMART extended self-tests on the ageing HDD, checked reallocated, pending and uncorrectable sector counts, and set a monitoring baseline before trusting it with data.</p></li>
+            <li><h3>Safe disk handling</h3><p>Linux disk names swapped when a second drive was added, so I verified drives by model before wiping and switched to label-based mounting.</p></li>
+            <li><h3>Docker permissions and database setup</h3><p>Fixed user group access for Docker and resolved database credential mismatches cleanly.</p></li>
+            <li><h3>Power tuning</h3><p>Measured CPU power with Intel RAPL (about 4.7 W at idle) and set the HDD to spin down after 30 minutes idle, verified with <code>hdparm</code> and disk I/O counters. Estimated whole-system draw is about 25 to 30 W.</p></li>
+          </ul>
+        </section>
+
+        <section class="lab-section" aria-labelledby="hs-learned">
+          <h2 id="hs-learned">What I learned</h2>
+          <p>Linux server administration, storage and disk health, and container deployment.</p>
+          <p>Secure networking with a mesh VPN, and methodical hardware troubleshooting.</p>
+        </section>
+
+        <section class="lab-section wide" aria-labelledby="hs-shots">
+          <h2 id="hs-shots">Screenshots</h2>
+          <!--
+            To add a screenshot: upload the image to the repository (for example lab/nextcloud.png),
+            then replace the whole <div class="shot-box">...</div> with:
+              <img src="lab/nextcloud.png" alt="Nextcloud dashboard on the home server" loading="lazy">
+            Before uploading, blur or crop out IP addresses, tailnet or domain names, usernames and hostnames.
+          -->
+          <div class="shots">
+            <figure class="shot">
+              <div class="shot-box">Screenshot placeholder: Nextcloud dashboard</div>
+              <figcaption>Nextcloud dashboard</figcaption>
+            </figure>
+            <figure class="shot">
+              <div class="shot-box">Screenshot placeholder: server terminal</div>
+              <figcaption>Server terminal: containers and system status</figcaption>
+            </figure>
+            <figure class="shot">
+              <div class="shot-box">Photo placeholder: the repurposed desktop</div>
+              <figcaption>The 2011-era desktop now running as home-server</figcaption>
+            </figure>
+          </div>
+        </section>
+
+        <div class="detail-foot"><a class="back" href="#lab">Back to Lab</a></div>
+      </div>
+    </article>
+  </div>
   <section class="contact" id="contact" aria-labelledby="contact-h">
     <div class="wrap">
       <h2 id="contact-h">Get in touch</h2>
@@ -1146,6 +1365,57 @@
     })(start);
   }
 })();
+</script>
+<script>
+  // Tabs: "#lab" and "#lab-..." show the Lab view; any other address shows Projects.
+  // "#contact" is shared by both views, so it leaves the current view in place.
+  (function () {
+    var work = document.getElementById("view-work");
+    var lab = document.getElementById("view-lab");
+    var intro = document.getElementById("lab");
+    var list = document.getElementById("lab-list");
+    var details = Array.prototype.slice.call(document.querySelectorAll(".lab-detail"));
+    var tabs = document.querySelectorAll("[data-tab]");
+    var baseTitle = document.title;
+    var shared = { contact: 1, main: 1 };
+
+    function route(moveFocus) {
+      var h = decodeURIComponent(location.hash.slice(1));
+      if (shared[h]) return;
+      var isLab = h === "lab" || h.indexOf("lab-") === 0;
+      var detail = null;
+      if (isLab && h !== "lab") {
+        var el = document.getElementById(h);
+        if (el && el.classList.contains("lab-detail")) detail = el;
+      }
+      work.hidden = isLab;
+      lab.hidden = !isLab;
+      intro.hidden = !!detail;
+      list.hidden = !!detail;
+      details.forEach(function (d) { d.hidden = d !== detail; });
+      tabs.forEach(function (t) {
+        if (t.getAttribute("data-tab") === (isLab ? "lab" : "work")) t.setAttribute("aria-current", "page");
+        else t.removeAttribute("aria-current");
+      });
+      document.title = detail ? detail.getAttribute("data-title") + " | Lab | Mansaf Maheen" : (isLab ? "Lab | Mansaf Maheen" : baseTitle);
+      if (!moveFocus) return;
+      if (isLab) {
+        var heading = detail ? detail.querySelector("h1") : document.getElementById("lab-h");
+        if (heading) heading.focus({ preventScroll: true });
+        // Start Lab views at the very top so the tabs stay in sight (the browser would otherwise jump to the anchor)
+        window.scrollTo(0, 0);
+        requestAnimationFrame(function () { window.scrollTo(0, 0); });
+      } else if (h && h !== "top") {
+        var target = document.getElementById(h);
+        if (target) target.scrollIntoView();
+      } else {
+        window.scrollTo(0, 0);
+      }
+    }
+    window.addEventListener("hashchange", function () { route(true); });
+    route(/^#lab/.test(location.hash));
+    window.addEventListener("load", function () { if (/^#lab/.test(location.hash)) setTimeout(function () { window.scrollTo(0, 0); }, 0); });
+  })();
 </script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "a56231cf5741407486fc219deafbf4ac"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
